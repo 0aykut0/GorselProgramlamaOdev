@@ -13,16 +13,20 @@ namespace gorselProgramlamaProje.Forms
 {
     public partial class PomodoroForm : Form
     {
-        // 1️⃣ Alanlar (Fields)
-        private int timeLeft = 20 * 60;    // Başlangıçta 20 dakika (saniye cinsinden)
+        // ─────────────── Yeni eklenen alanlar ───────────────
+        private readonly int workDuration = 1 * 60;  // 20 dk çalışma
+        private readonly int breakDuration = 5 * 60;  // 5  dk mola
+        private bool isOnBreak;                        // Şu anda molada mıyız?
+        // ────────────────────────────────────────────────────
+
+        private int timeLeft = 20 * 60;    // Başlangıçta 20 dk
         private bool isRunning = false;    // Sayaç çalışıyor mu?
 
-        // 2️⃣ Kurucu (Constructor)
         public PomodoroForm()
         {
-            InitializeComponent();  // Designer tarafından oluşturulan kontrolleri ekler
+            InitializeComponent();
 
-            // Olayları (event) bağla
+            // event bağlamaları
             this.Load += PomodoroForm_Load;
             btnStart.Click += btnStart_Click;
             btnPause.Click += btnPause_Click;
@@ -30,26 +34,27 @@ namespace gorselProgramlamaProje.Forms
             timer1.Tick += timer1_Tick;
         }
 
-        // 3️⃣ Form Yüklendiğinde — Paneli daire yap ve label'ı güncelle
         private void PomodoroForm_Load(object? sender, EventArgs e)
         {
-            // pnlTimer panelini runtime’da daire yap
+            // ─────────────── Yeni başlangıç atamaları ───────────────
+            isOnBreak = false;
+            timeLeft = workDuration;
+            isRunning = false;
+            // ─────────────────────────────────────────────────────────
+
+            // pnlTimer’ı daireye çevirme ve ilk etiketi güncelleme
             var path = new GraphicsPath();
             path.AddEllipse(0, 0, pnlTimer.Width, pnlTimer.Height);
             pnlTimer.Region = new Region(path);
-
-            // Ekrandaki saati göster
             UpdateLabel();
         }
 
-        // 4️⃣ Label Güncelleme Metodu — timeLeft’e göre “mm:ss” formatı
         private void UpdateLabel()
         {
             var ts = TimeSpan.FromSeconds(timeLeft);
             lblTime.Text = ts.ToString(@"mm\:ss");
         }
 
-        // 5️⃣ Başlat Butonu
         private void btnStart_Click(object? sender, EventArgs e)
         {
             if (!isRunning)
@@ -59,7 +64,6 @@ namespace gorselProgramlamaProje.Forms
             }
         }
 
-        // 6️⃣ Duraklat Butonu
         private void btnPause_Click(object? sender, EventArgs e)
         {
             if (isRunning)
@@ -69,16 +73,19 @@ namespace gorselProgramlamaProje.Forms
             }
         }
 
-        // 7️⃣ Sıfırla Butonu
         private void btnStop_Click(object? sender, EventArgs e)
         {
             timer1.Stop();
             isRunning = false;
-            timeLeft = 20 * 60;    // Yeniden 20 dakikaya al
+
+            // ─────────────── Reset her zaman çalışma moduna ───────────────
+            isOnBreak = false;
+            timeLeft = workDuration;
+            // ────────────────────────────────────────────────────────────────
+
             UpdateLabel();
         }
 
-        // 8️⃣ Timer’ın Her “Tick” Olayı (1 saniyede bir tetiklenir)
         private void timer1_Tick(object? sender, EventArgs e)
         {
             if (timeLeft > 0)
@@ -88,17 +95,23 @@ namespace gorselProgramlamaProje.Forms
             }
             else
             {
-                // Süre dolunca durdur ve uyarı ver
-                timer1.Stop();
-                isRunning = false;
-                MessageBox.Show("Süre doldu!", "Pomodoro",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Süre doldu, mod değiştir
+                isOnBreak = !isOnBreak;
+                timeLeft = isOnBreak ? breakDuration : workDuration;
+
+                // Kullanıcıya bilgi ver (isteğe bağlı)
+                if (isOnBreak)
+                    MessageBox.Show("Çalışma süresi doldu! Mola başlıyor.",
+                                    "Pomodoro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    MessageBox.Show("Mola bitti! Çalışma zamanı.",
+                                    "Pomodoro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Sayaç devam etsin
+                UpdateLabel();
+                timer1.Start();
+                isRunning = true;
             }
-        }
-
-        private void lblTime_FontChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

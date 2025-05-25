@@ -56,7 +56,7 @@
             lblTime.Padding = new Padding(0, 10, 0, 0);
             lblTime.Size = new Size(200, 200);
             lblTime.TabIndex = 0;
-            lblTime.Text = "20:00";
+            lblTime.Text = "00:20";
             lblTime.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // btnStart
