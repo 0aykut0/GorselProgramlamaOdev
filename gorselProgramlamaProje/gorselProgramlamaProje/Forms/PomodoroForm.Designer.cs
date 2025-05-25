@@ -68,7 +68,7 @@
             btnStart.FlatAppearance.MouseDownBackColor = Color.Pink;
             btnStart.FlatAppearance.MouseOverBackColor = Color.Pink;
             btnStart.FlatStyle = FlatStyle.Flat;
-            btnStart.Location = new Point(260, 260);
+            btnStart.Location = new Point(230, 260);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(100, 40);
             btnStart.TabIndex = 1;
@@ -84,7 +84,7 @@
             btnPause.FlatAppearance.MouseDownBackColor = Color.Pink;
             btnPause.FlatAppearance.MouseOverBackColor = Color.Pink;
             btnPause.FlatStyle = FlatStyle.Flat;
-            btnPause.Location = new Point(380, 260);
+            btnPause.Location = new Point(350, 260);
             btnPause.Name = "btnPause";
             btnPause.Size = new Size(100, 40);
             btnPause.TabIndex = 2;
@@ -100,7 +100,7 @@
             btnStop.FlatAppearance.MouseDownBackColor = Color.Pink;
             btnStop.FlatAppearance.MouseOverBackColor = Color.Pink;
             btnStop.FlatStyle = FlatStyle.Flat;
-            btnStop.Location = new Point(500, 260);
+            btnStop.Location = new Point(470, 260);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(100, 40);
             btnStop.TabIndex = 3;
@@ -116,12 +116,16 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.MenuText;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(793, 455);
             Controls.Add(btnStop);
             Controls.Add(btnPause);
             Controls.Add(btnStart);
             Controls.Add(pnlTimer);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "PomodoroForm";
+            SizeGripStyle = SizeGripStyle.Hide;
             Text = "PomodoroForm";
             Load += PomodoroForm_Load;
             pnlTimer.ResumeLayout(false);
