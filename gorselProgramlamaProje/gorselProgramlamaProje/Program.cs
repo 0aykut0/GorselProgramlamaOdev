@@ -1,3 +1,5 @@
+using gorselProgramlamaProje.Forms;
+
 namespace gorselProgramlamaProje
 {
     internal static class Program
