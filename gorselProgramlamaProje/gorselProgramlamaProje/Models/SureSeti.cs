@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace gorselProgramlamaProje.Models;
 
-namespace gorselProgramlamaProje.Models
+public class SureSeti
 {
-    public class SureSeti
-    {
-        public int Id { get; set; }
-        public int CalismaSure { get; set; }
-        public int MolaSure { get; set; }
-        public int? OlusturanKullaniciId { get; set; }
+    public int Id { get; set; }
+    public string Ad { get; set; } = string.Empty;
+    public int CalismaSuresi { get; set; }
+    public int MolaSuresi { get; set; }
 
-        // Navigation
-        public Kullanici? OlusturanKullanici { get; set; }
-        public List<PomodoroOturumu> Oturumlar { get; set; } = new();
-        public List<KullaniciAyar> SeciliAyarlar { get; set; } = new();
-    }
-
+    // Kullanıcıya özelse bu alan atanır, değilse null olabilir
+    public int? KullaniciId { get; set; }
+    public Kullanici? Kullanici { get; set; }
 }
