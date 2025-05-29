@@ -20,28 +20,41 @@ namespace gorselProgramlamaProje.Forms
         public SilinenlerForm()
         {
             InitializeComponent();
-
-            // Olayları bağla
             this.Load += SilinenlerForm_Load;
             dgvDeleted.CellContentClick += dgvDeleted_CellContentClick;
         }
 
         private void SilinenlerForm_Load(object? sender, EventArgs e)
         {
-            // Panel kenarını kaldır
-            pnlContainer.BorderStyle = BorderStyle.None;
-
-            // Form + grid arkaplanını siyah yap
-            this.BackColor = Color.Black;
-            dgvDeleted.BackgroundColor = Color.Black;
-            dgvDeleted.EnableHeadersVisualStyles = false;
+            // — Sıfırla ve tasarla
+            dgvDeleted.Columns.Clear();
             dgvDeleted.AutoGenerateColumns = false;
             dgvDeleted.Dock = DockStyle.Fill;
 
-            // Kullanacağımız pembe tonu
-            Color pink = ColorTranslator.FromHtml("#fcbec8");
+            pnlContainer.BorderStyle = BorderStyle.None;
+            BackColor = Color.Black;
+            dgvDeleted.BackgroundColor = Color.Black;
+            dgvDeleted.EnableHeadersVisualStyles = false;
 
-            // 1) “Görev” sütunu
+            var pink = ColorTranslator.FromHtml("#fcbec8");
+
+            // — Başlık satırı
+            dgvDeleted.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = pink,
+                ForeColor = Color.Black,
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                Alignment = DataGridViewContentAlignment.MiddleCenter
+            };
+            dgvDeleted.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvDeleted.ColumnHeadersHeight = 40;
+
+            dgvDeleted.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvDeleted.GridColor = Color.Black;
+            dgvDeleted.DefaultCellStyle.SelectionBackColor = ControlPaint.Dark(pink);
+            dgvDeleted.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            // 1) Görev
             dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colTask",
@@ -51,12 +64,12 @@ namespace gorselProgramlamaProje.Forms
                 {
                     BackColor = pink,
                     ForeColor = Color.Black,
-                    Font = new Font("Segoe UI", 14, FontStyle.Regular),
+                    Font = new Font("Segoe UI", 14),
                     Alignment = DataGridViewContentAlignment.MiddleLeft
                 }
             });
 
-            // 2) “Tarih” sütunu
+            // 2) Tarih
             dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colDate",
@@ -66,64 +79,43 @@ namespace gorselProgramlamaProje.Forms
                 {
                     BackColor = pink,
                     ForeColor = Color.Black,
-                    Font = new Font("Segoe UI", 14, FontStyle.Regular),
+                    Font = new Font("Segoe UI", 14),
                     Format = "g",
                     Alignment = DataGridViewContentAlignment.MiddleCenter
                 }
             });
 
-            // 3) “Geri Al” butonu
+            // 3) Geri Al
             dgvDeleted.Columns.Add(new DataGridViewButtonColumn
             {
                 Name = "colRestore",
                 HeaderText = "",
-                Text = "↺",
+                Text = "↩️",
                 UseColumnTextForButtonValue = true,
-                Width = 100,
+                Width = 60,
                 DefaultCellStyle = new DataGridViewCellStyle
                 {
                     BackColor = pink,
-                    ForeColor = Color.Black,
-                    Font = new Font("Segoe UI", 14, FontStyle.Bold),
                     Alignment = DataGridViewContentAlignment.MiddleCenter
                 }
             });
 
-            // 4) “Kalıcı Sil” butonu
+            // 4) Kalıcı Sil
             dgvDeleted.Columns.Add(new DataGridViewButtonColumn
             {
                 Name = "colDelete",
                 HeaderText = "",
                 Text = "🗑️",
                 UseColumnTextForButtonValue = true,
-                Width = 100,
+                Width = 60,
                 DefaultCellStyle = new DataGridViewCellStyle
                 {
                     BackColor = pink,
-                    ForeColor = Color.Black,
-                    Font = new Font("Segoe UI", 14, FontStyle.Bold),
                     Alignment = DataGridViewContentAlignment.MiddleCenter
                 }
             });
 
-            // 5) Başlık satırı stili
-            dgvDeleted.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
-            {
-                BackColor = pink,
-                ForeColor = Color.Black,
-                Font = new Font("Segoe UI", 16, FontStyle.Bold),
-                Alignment = DataGridViewContentAlignment.MiddleCenter
-            };
-            dgvDeleted.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDeleted.ColumnHeadersHeight = 40;
-
-            // 6) Hücre çizgileri ve seçim rengi
-            dgvDeleted.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvDeleted.GridColor = Color.Black;
-            dgvDeleted.DefaultCellStyle.SelectionBackColor = ControlPaint.Dark(pink);
-            dgvDeleted.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-            // 7) Test verisi ekle
+            // — Test verisi
             dgvDeleted.Rows.Add("Test Görev 1", DateTime.Now.AddDays(-1));
             dgvDeleted.Rows.Add("Test Görev 2", DateTime.Now.AddHours(-3));
             dgvDeleted.Rows.Add("Test Görev 3", DateTime.Now.AddDays(-2));
@@ -133,23 +125,22 @@ namespace gorselProgramlamaProje.Forms
         {
             if (e.RowIndex < 0) return;
 
-            var colName = dgvDeleted.Columns[e.ColumnIndex].Name;
-            var task = dgvDeleted.Rows[e.RowIndex].Cells["colTask"].Value?.ToString() ?? "";
+            var col = dgvDeleted.Columns[e.ColumnIndex].Name;
+            var task = dgvDeleted.Rows[e.RowIndex].Cells["colTask"].Value?.ToString();
 
-            if (colName == "colRestore")
+            if (col == "colRestore")
             {
-                // Geri Al
-                MessageBox.Show($"“{task}” geri yüklendi!",
-                                "Geri Yükle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 dgvDeleted.Rows.RemoveAt(e.RowIndex);
+                MessageBox.Show($"“{task}” geri yüklendi!", "Geri Yükle",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (colName == "colDelete")
+            else if (col == "colDelete")
             {
-                // Kalıcı Sil
-                var result = MessageBox.Show($"“{task}” kalıcı olarak silinsin mi?",
-                                             "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.Yes)
+                if (MessageBox.Show($"“{task}” kalıcı silinsin mi?", "Onay",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
                     dgvDeleted.Rows.RemoveAt(e.RowIndex);
+                }
             }
         }
     }
