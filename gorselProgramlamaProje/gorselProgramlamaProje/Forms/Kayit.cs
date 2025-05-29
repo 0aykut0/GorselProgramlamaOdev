@@ -1,4 +1,6 @@
-﻿using System;
+﻿using gorselProgramlamaProje.Managers;
+using gorselProgramlamaProje.Models;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -26,9 +28,41 @@ namespace gorselProgramlamaProje.Forms
 
         private void btnKayit_Click(object sender, EventArgs e)
         {
-            // TODO: Kayıt işlemini burada gerçekleştirin
+            string kullaniciAdi = txtKullaniciAd.Text.Trim();
+            string sifre = txtParola.Text.Trim();
+            string sifreTekrar = txtParola2.Text.Trim();
+
+            if (string.IsNullOrEmpty(kullaniciAdi)||
+                string.IsNullOrEmpty(sifre) || string.IsNullOrEmpty(sifreTekrar))
+            {
+                MessageBox.Show("Lütfen tüm alanları doldurun.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (sifre != sifreTekrar)
+            {
+                MessageBox.Show("Şifreler uyuşmuyor.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (KullaniciManager.KullaniciAdiVarMi(kullaniciAdi))
+            {
+                MessageBox.Show("Bu kullanıcı adı zaten alınmış.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var yeniKullanici = new Kullanici
+            {
+                KullaniciAdi = kullaniciAdi,
+                SifreHash = sifre // hashleme KullaniciManager içinde yapılacak
+            };
+
+            KullaniciManager.KullaniciEkle(yeniKullanici);
+
+            MessageBox.Show("Kayıt başarılı! Giriş ekranına yönlendiriliyorsunuz.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
+
 
         private void btnIptal_Click(object sender, EventArgs e)
         {
