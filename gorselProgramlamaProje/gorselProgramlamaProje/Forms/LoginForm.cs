@@ -44,7 +44,7 @@ namespace gorselProgramlamaProje.Forms
             {
                 MessageBox.Show("Giriş başarılı!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
-                var anaForm = new Form1(); // AnaForm constructor'ı Kullanici almalı
+                var anaForm = new AnaSayfaForm(); // AnaForm constructor'ı Kullanici almalı
                 anaForm.ShowDialog();
                 this.Close();
             }
