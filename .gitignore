@@ -402,3 +402,8 @@ FodyWeavers.xsd
 
 # SQLite veritabanı dosyaları
 *.db
+# Entity Framework Core Migration dosyaları
+Migrations/
+
+# UygulamaDbContext (isteğe bağlı ignore)
+**/UygulamaDbContext.cs
