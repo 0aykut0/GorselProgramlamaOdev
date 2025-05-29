@@ -407,3 +407,4 @@ Migrations/
 
 # UygulamaDbContext (isteğe bağlı ignore)
 **/UygulamaDbContext.cs
+
