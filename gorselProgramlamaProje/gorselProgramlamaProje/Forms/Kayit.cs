@@ -66,8 +66,11 @@ namespace gorselProgramlamaProje.Forms
 
         private void btnIptal_Click(object sender, EventArgs e)
         {
-            // İptal edildiğinde formu kapatır
+            // İptal edildiğinde formu kapatır ve login ekranına döner
             this.Close();
+            var loginForm = new LoginForm();
+            loginForm.ShowDialog();
+
         }
 
         private void txtKullaniciAd_TextChanged(object sender, EventArgs e)
