@@ -7,7 +7,7 @@ namespace gorselProgramlamaProje.Managers;
 
 public static class KullaniciManager
 {
-    // Kullanıcı ekle
+    // Kullanıcı ekle (şifre hash'lenir)
     public static void KullaniciEkle(Kullanici kullanici)
     {
         using var context = new UygulamaDbContext();
@@ -32,11 +32,18 @@ public static class KullaniciManager
         return context.Kullanicilar.Find(kullaniciId);
     }
 
-    // Kullanıcı adı var mı kontrolü (kayıt ekranı için)
+    // Kullanıcı adı zaten var mı? (kayıt için)
     public static bool KullaniciAdiVarMi(string kullaniciAdi)
     {
         using var context = new UygulamaDbContext();
         return context.Kullanicilar.Any(k => k.KullaniciAdi == kullaniciAdi);
+    }
+
+    // Sistemde hiç kullanıcı var mı? (giriş ekranı kontrolü için)
+    public static bool HicKullaniciVarMi()
+    {
+        using var context = new UygulamaDbContext();
+        return context.Kullanicilar.Any();
     }
 
     // Şifreyi SHA256 ile hashle

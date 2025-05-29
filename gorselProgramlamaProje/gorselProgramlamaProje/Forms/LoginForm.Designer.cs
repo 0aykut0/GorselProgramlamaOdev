@@ -46,23 +46,26 @@
             LoginPanel.Controls.Add(lblKullaniciAdi);
             LoginPanel.Controls.Add(btnUyeOl);
             LoginPanel.Controls.Add(btnGiris);
-            LoginPanel.Location = new Point(344, 217);
+            LoginPanel.Location = new Point(393, 289);
+            LoginPanel.Margin = new Padding(3, 4, 3, 4);
             LoginPanel.Name = "LoginPanel";
-            LoginPanel.Size = new Size(398, 189);
+            LoginPanel.Size = new Size(455, 252);
             LoginPanel.TabIndex = 0;
             // 
             // txtParola
             // 
-            txtParola.Location = new Point(150, 54);
+            txtParola.Location = new Point(171, 72);
+            txtParola.Margin = new Padding(3, 4, 3, 4);
             txtParola.Name = "txtParola";
-            txtParola.Size = new Size(187, 23);
+            txtParola.Size = new Size(213, 27);
             txtParola.TabIndex = 6;
             // 
             // txtKullaniciAdi
             // 
-            txtKullaniciAdi.Location = new Point(150, 25);
+            txtKullaniciAdi.Location = new Point(171, 33);
+            txtKullaniciAdi.Margin = new Padding(3, 4, 3, 4);
             txtKullaniciAdi.Name = "txtKullaniciAdi";
-            txtKullaniciAdi.Size = new Size(187, 23);
+            txtKullaniciAdi.Size = new Size(213, 27);
             txtKullaniciAdi.TabIndex = 5;
             // 
             // lblParola
@@ -70,9 +73,9 @@
             lblParola.AutoSize = true;
             lblParola.BackColor = Color.Pink;
             lblParola.BorderStyle = BorderStyle.FixedSingle;
-            lblParola.Location = new Point(66, 57);
+            lblParola.Location = new Point(75, 76);
             lblParola.Name = "lblParola";
-            lblParola.Size = new Size(42, 17);
+            lblParola.Size = new Size(52, 22);
             lblParola.TabIndex = 4;
             lblParola.Text = "Parola";
             // 
@@ -81,9 +84,9 @@
             lblKullaniciAdi.AutoSize = true;
             lblKullaniciAdi.BackColor = Color.Pink;
             lblKullaniciAdi.BorderStyle = BorderStyle.FixedSingle;
-            lblKullaniciAdi.Location = new Point(66, 28);
+            lblKullaniciAdi.Location = new Point(75, 37);
             lblKullaniciAdi.Name = "lblKullaniciAdi";
-            lblKullaniciAdi.Size = new Size(78, 17);
+            lblKullaniciAdi.Size = new Size(97, 22);
             lblKullaniciAdi.TabIndex = 3;
             lblKullaniciAdi.Text = "Kullanıcı Adı:";
             lblKullaniciAdi.Click += lblKullaniciAdi_Click;
@@ -91,9 +94,10 @@
             // btnUyeOl
             // 
             btnUyeOl.BackColor = Color.Pink;
-            btnUyeOl.Location = new Point(69, 113);
+            btnUyeOl.Location = new Point(79, 151);
+            btnUyeOl.Margin = new Padding(3, 4, 3, 4);
             btnUyeOl.Name = "btnUyeOl";
-            btnUyeOl.Size = new Size(75, 23);
+            btnUyeOl.Size = new Size(86, 31);
             btnUyeOl.TabIndex = 2;
             btnUyeOl.Text = "Üye Ol";
             btnUyeOl.UseVisualStyleBackColor = false;
@@ -102,21 +106,24 @@
             // btnGiris
             // 
             btnGiris.BackColor = Color.Pink;
-            btnGiris.Location = new Point(262, 113);
+            btnGiris.Location = new Point(299, 151);
+            btnGiris.Margin = new Padding(3, 4, 3, 4);
             btnGiris.Name = "btnGiris";
-            btnGiris.Size = new Size(75, 23);
+            btnGiris.Size = new Size(86, 31);
             btnGiris.TabIndex = 1;
             btnGiris.Text = "Giris Yap";
             btnGiris.UseVisualStyleBackColor = false;
+            btnGiris.Click += btnLogin_Click;
             // 
             // LoginForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
-            ClientSize = new Size(1071, 646);
+            ClientSize = new Size(1224, 861);
             Controls.Add(LoginPanel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "LoginForm";

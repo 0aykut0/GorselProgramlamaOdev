@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gorselProgramlamaProje.Managers;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -23,8 +24,37 @@ namespace gorselProgramlamaProje.Forms
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            // TODO: Giriş doğrulama mantığını buraya ekleyin
+            string kullaniciAdi = txtKullaniciAdi.Text.Trim();
+            string sifre = txtParola.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(kullaniciAdi) || string.IsNullOrWhiteSpace(sifre))
+            {
+                MessageBox.Show("Kullanıcı adı ve şifre boş olamaz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!KullaniciManager.HicKullaniciVarMi())
+            {
+                MessageBox.Show("Sistemde kayıtlı kullanıcı bulunmamaktadır. Lütfen önce kayıt olun.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var kullanici = KullaniciManager.KullaniciGirisYap(kullaniciAdi, sifre);
+            if (kullanici != null)
+            {
+                MessageBox.Show("Giriş başarılı!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Hide();
+                var anaForm = new Form1(); // AnaForm constructor'ı Kullanici almalı
+                anaForm.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Kullanıcı adı veya şifre hatalı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+
 
         private void lblKullaniciAdi_Click(object sender, EventArgs e)
         {
