@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using gorselProgramlamaProje.Models;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace gorselProgramlamaProje.Data;
 
@@ -15,8 +16,7 @@ public class UygulamaDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        var projectRoot = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\"));
-        var dbPath = Path.Combine(projectRoot, "Data", "pomodoro.db");
+        var dbPath = @"C:\Users\mayku\Desktop\pomodoro\GorselProgramlamaOdev\gorselProgramlamaProje\gorselProgramlamaProje\Data\pomodoro.db";
 
         if (!Directory.Exists(Path.GetDirectoryName(dbPath)))
             Directory.CreateDirectory(Path.GetDirectoryName(dbPath)!);
