@@ -30,12 +30,10 @@
         {
             panelMenu = new Panel();
             button1 = new Button();
-            btnAyarlar = new Button();
             btnPerformans = new Button();
             btnTakvim = new Button();
             btnsSilinenler = new Button();
             btnPomodoro = new Button();
-            btnAnaSayfa = new Button();
             btnMenu = new Button();
             monthCalendar1 = new MonthCalendar();
             flpTarihler = new FlowLayoutPanel();
@@ -56,12 +54,10 @@
             // 
             panelMenu.BackColor = Color.FromArgb(64, 64, 64);
             panelMenu.Controls.Add(button1);
-            panelMenu.Controls.Add(btnAyarlar);
             panelMenu.Controls.Add(btnPerformans);
             panelMenu.Controls.Add(btnTakvim);
             panelMenu.Controls.Add(btnsSilinenler);
             panelMenu.Controls.Add(btnPomodoro);
-            panelMenu.Controls.Add(btnAnaSayfa);
             panelMenu.Location = new Point(0, 49);
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(262, 428);
@@ -71,30 +67,19 @@
             // button1
             // 
             button1.BackColor = Color.FromArgb(255, 192, 192);
-            button1.Location = new Point(47, 379);
+            button1.Location = new Point(68, 380);
             button1.Name = "button1";
             button1.Size = new Size(160, 29);
             button1.TabIndex = 6;
             button1.Text = "Hesaptan Çık";
             button1.UseVisualStyleBackColor = false;
             // 
-            // btnAyarlar
-            // 
-            btnAyarlar.BackColor = Color.FromArgb(255, 192, 192);
-            btnAyarlar.Location = new Point(68, 273);
-            btnAyarlar.Name = "btnAyarlar";
-            btnAyarlar.Size = new Size(106, 58);
-            btnAyarlar.TabIndex = 5;
-            btnAyarlar.Text = "AYARLAR";
-            btnAyarlar.UseVisualStyleBackColor = false;
-            btnAyarlar.Click += btnAyarlar_Click;
-            // 
             // btnPerformans
             // 
             btnPerformans.BackColor = Color.FromArgb(255, 192, 192);
             btnPerformans.Location = new Point(68, 229);
             btnPerformans.Name = "btnPerformans";
-            btnPerformans.Size = new Size(106, 29);
+            btnPerformans.Size = new Size(139, 29);
             btnPerformans.TabIndex = 4;
             btnPerformans.Text = "Performans Takibi";
             btnPerformans.UseVisualStyleBackColor = false;
@@ -105,9 +90,9 @@
             btnTakvim.BackColor = Color.FromArgb(255, 192, 192);
             btnTakvim.Location = new Point(68, 194);
             btnTakvim.Name = "btnTakvim";
-            btnTakvim.Size = new Size(106, 29);
+            btnTakvim.Size = new Size(139, 29);
             btnTakvim.TabIndex = 3;
-            btnTakvim.Text = "Takvim";
+            btnTakvim.Text = "Ayarlar";
             btnTakvim.UseVisualStyleBackColor = false;
             // 
             // btnsSilinenler
@@ -115,7 +100,7 @@
             btnsSilinenler.BackColor = Color.FromArgb(255, 192, 192);
             btnsSilinenler.Location = new Point(68, 159);
             btnsSilinenler.Name = "btnsSilinenler";
-            btnsSilinenler.Size = new Size(106, 29);
+            btnsSilinenler.Size = new Size(139, 29);
             btnsSilinenler.TabIndex = 2;
             btnsSilinenler.Text = "Silinenler";
             btnsSilinenler.UseVisualStyleBackColor = false;
@@ -125,21 +110,10 @@
             btnPomodoro.BackColor = Color.FromArgb(255, 192, 192);
             btnPomodoro.Location = new Point(68, 123);
             btnPomodoro.Name = "btnPomodoro";
-            btnPomodoro.Size = new Size(106, 29);
+            btnPomodoro.Size = new Size(139, 29);
             btnPomodoro.TabIndex = 1;
             btnPomodoro.Text = "Pomodoro";
             btnPomodoro.UseVisualStyleBackColor = false;
-            // 
-            // btnAnaSayfa
-            // 
-            btnAnaSayfa.BackColor = Color.Pink;
-            btnAnaSayfa.Location = new Point(68, 88);
-            btnAnaSayfa.Name = "btnAnaSayfa";
-            btnAnaSayfa.Size = new Size(106, 29);
-            btnAnaSayfa.TabIndex = 0;
-            btnAnaSayfa.Text = "Ana Sayfa";
-            btnAnaSayfa.UseVisualStyleBackColor = false;
-            btnAnaSayfa.Click += btnAnaSayfa_Click;
             // 
             // btnMenu
             // 
@@ -268,10 +242,10 @@
             // 
             // AnaSayfaForm
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(1069, 761);
+            ClientSize = new Size(1028, 749);
             Controls.Add(btnGunuBitir);
             Controls.Add(flpGorevler);
             Controls.Add(flpTarihler);

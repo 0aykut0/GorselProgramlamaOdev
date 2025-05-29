@@ -16,5 +16,10 @@ namespace gorselProgramlamaProje.Forms
         {
             InitializeComponent();
         }
+
+        private void SilinenlerForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

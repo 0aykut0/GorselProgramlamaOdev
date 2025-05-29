@@ -32,7 +32,7 @@ namespace gorselProgramlamaProje.Forms
             string sifre = txtParola.Text.Trim();
             string sifreTekrar = txtParola2.Text.Trim();
 
-            if (string.IsNullOrEmpty(kullaniciAdi)||
+            if (string.IsNullOrEmpty(kullaniciAdi) ||
                 string.IsNullOrEmpty(sifre) || string.IsNullOrEmpty(sifreTekrar))
             {
                 MessageBox.Show("Lütfen tüm alanları doldurun.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);

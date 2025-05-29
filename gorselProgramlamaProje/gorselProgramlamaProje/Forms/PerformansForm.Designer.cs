@@ -65,7 +65,7 @@
             btnAyarlar.Text = "Ayarlar";
             button1.Text = "Hesaptan Çık";
 
-            Button[] buttons = { btnAnaSayfa, btnPomodoro, btnsSilinenler, btnTakvim, btnPerformans, btnAyarlar, button1 };
+            Button[] buttons = { btnAnaSayfa, btnPomodoro, btnsSilinenler, btnTakvim, btnPerformans, btnAyarlar, button1};
             int top = 20;
             foreach (var btn in buttons)
             {
