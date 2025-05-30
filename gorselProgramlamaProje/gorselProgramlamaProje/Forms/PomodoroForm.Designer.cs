@@ -38,6 +38,7 @@
             rdoShort = new RadioButton();
             rdoMedium = new RadioButton();
             rdoLong = new RadioButton();
+            btnMute = new Button();
             pnlTimer.SuspendLayout();
             SuspendLayout();
             // 
@@ -150,12 +151,22 @@
             rdoLong.Text = "YOĞUN (45 dk)";
             rdoLong.UseVisualStyleBackColor = false;
             // 
+            // btnMute
+            // 
+            btnMute.Location = new Point(736, 12);
+            btnMute.Name = "btnMute";
+            btnMute.Size = new Size(33, 32);
+            btnMute.TabIndex = 7;
+            btnMute.Text = "🔇";
+            btnMute.UseVisualStyleBackColor = true;
+            // 
             // PomodoroForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.MenuText;
             ClientSize = new Size(793, 455);
+            Controls.Add(btnMute);
             Controls.Add(rdoLong);
             Controls.Add(rdoMedium);
             Controls.Add(rdoShort);
@@ -186,5 +197,6 @@
         private RadioButton rdoShort;
         private RadioButton rdoMedium;
         private RadioButton rdoLong;
+        private Button btnMute;
     }
 }
