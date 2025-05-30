@@ -8,11 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using gorselProgramlamaProje.Managers;
 namespace gorselProgramlamaProje.Forms
 {
     public partial class AnaSayfaForm : Form
     {
+        private int currentUserId=SessionManager.CurrentUserId;
+        private string currentUsername = SessionManager.CurrentUsername;
+
         public AnaSayfaForm()
         {
             InitializeComponent();
@@ -23,11 +26,16 @@ namespace gorselProgramlamaProje.Forms
             this.MinimizeBox = false;
             this.SizeGripStyle = SizeGripStyle.Hide;
             this.BackColor = Color.Black; // Arka plan tamamen siyah
-            this.ForeColor = SystemColors.ActiveCaptionText;
-        }
+            this.ForeColor = SystemColors.ActiveCaptionText;        }
 
         private void AnaSayfaForm_Load(object sender, EventArgs e)
         {
+            MessageBox.Show(
+            $"Hoş geldin, {currentUsername}!",
+            "Hoşgeldiniz",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information
+        );
             DateTime bugun = DateTime.Today;
 
             flpTarihler.Controls.Clear();
@@ -107,12 +115,18 @@ namespace gorselProgramlamaProje.Forms
 
         private void btnAyarlar_Click(object sender, EventArgs e)
         {
-            // Boş
+            // ayarlar formunu aç
+            //this.Hide();
+            //var ayarlarForm = new AyarlarForm();
+            //ayarlarForm.ShowDialog();
         }
 
         private void btnPerformans_Click(object sender, EventArgs e)
         {
-            // Boş
+            // performans formunu aç
+            this.Hide();
+            var performansForm = new PerformansForm();
+            performansForm.ShowDialog();
         }
 
         private void btnAnaSayfa_Click(object sender, EventArgs e)
@@ -123,6 +137,34 @@ namespace gorselProgramlamaProje.Forms
         private void flpGorevler_Paint(object sender, PaintEventArgs e)
         {
             // Boş
+        }
+
+        private void btnPomodoro_Click(object sender, EventArgs e)
+        {
+            // pomodoro formunu aç
+            this.Hide();
+            var pomodoroForm = new PomodoroForm();
+            pomodoroForm.ShowDialog();
+        }
+
+        private void btnsSilinenler_Click(object sender, EventArgs e)
+        {
+            // silinenler formunu aç
+            this.Hide();
+            var silinenlerForm = new SilinenlerForm();
+            silinenlerForm.ShowDialog();
+
+        }
+
+        private void btnGunuBitir_Click(object sender, EventArgs e)
+        {
+            // Gün bitirme işlemi
+            MessageBox.Show("Gün başarıyla bitirildi!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var GunBitirmeForm = new GunSonu();
+            GunBitirmeForm.ShowDialog(); // Gün sonu formunu modal olarak aç
+            this.Close(); // Ana sayfa formunu kapat
+            
+            
         }
     }
 }
