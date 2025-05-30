@@ -117,7 +117,7 @@ namespace gorselProgramlamaProje.Forms
         private void btnPerformans_Click(object sender, EventArgs e)
         {
             // performans formunu aç
-            this.Hide();
+            this.Visible = false;
             var performansForm = new PerformansForm();
             performansForm.ShowDialog();
         }
@@ -131,7 +131,7 @@ namespace gorselProgramlamaProje.Forms
         private void btnPomodoro_Click(object sender, EventArgs e)
         {
             // pomodoro formunu aç
-            this.Hide();
+            this.Visible = false; // Ana sayfa formunu gizle
             var pomodoroForm = new PomodoroForm();
             pomodoroForm.ShowDialog();
         }
@@ -139,7 +139,7 @@ namespace gorselProgramlamaProje.Forms
         private void btnsSilinenler_Click(object sender, EventArgs e)
         {
             // silinenler formunu aç
-            this.Hide();
+            this.Visible = false; // Ana sayfa formunu gizle
             var silinenlerForm = new SilinenlerForm();
             silinenlerForm.ShowDialog();
 
