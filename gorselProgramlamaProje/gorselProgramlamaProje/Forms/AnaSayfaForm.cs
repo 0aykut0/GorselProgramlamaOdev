@@ -14,8 +14,6 @@ namespace gorselProgramlamaProje.Forms
     public partial class AnaSayfaForm : Form
     {
         private Button selectedDateButton = null;
-        private DateTime selectedDate = DateTime.Today;
-        private Dictionary<DateTime, List<string>> gorevListesi = new Dictionary<DateTime, List<string>>();
 
         public AnaSayfaForm()
         {
@@ -27,22 +25,20 @@ namespace gorselProgramlamaProje.Forms
             this.SizeGripStyle = SizeGripStyle.Hide;
             this.BackColor = Color.Black;
             this.ForeColor = SystemColors.ActiveCaptionText;
-
-            btnGorevEkle.Click += BtnGorevEkle_Click;
         }
 
         private void AnaSayfaForm_Load(object sender, EventArgs e)
         {
             DateTime bugun = DateTime.Today;
             flpTarihler.Controls.Clear();
-            flpTarihler.Height = 80;
+            flpTarihler.Height = 80; // Tarih paneli yüksekliği artırıldı
 
             for (int i = -3; i <= 3; i++)
             {
                 DateTime gun = bugun.AddDays(i);
 
                 Button btn = new Button();
-                btn.Size = new Size(90, 70);
+                btn.Size = new Size(90, 70); // Boyut artırıldı
                 btn.Margin = new Padding(5);
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.BackColor = (i == 0) ? Color.MediumPurple : Color.LightGray;
@@ -53,17 +49,14 @@ namespace gorselProgramlamaProje.Forms
                 btn.Tag = gun;
                 btn.Click += TarihButton_Click;
 
-                if (i == 0)
-                {
-                    selectedDate = gun;
-                    selectedDateButton = btn;
-                }
+                if (i == 0) selectedDateButton = btn;
 
                 flpTarihler.Controls.Add(btn);
             }
 
-            gorevListesi[selectedDate] = new List<string> { "Java ödevini bitir", "Sunumu hazırla", "GitHub push kontrolü" };
-            GorevleriYukle(selectedDate);
+            SahteGorevEkle("Java ödevini bitir");
+            SahteGorevEkle("Sunumu hazırla");
+            SahteGorevEkle("GitHub push kontrolü");
         }
 
         private void TarihButton_Click(object sender, EventArgs e)
@@ -74,40 +67,21 @@ namespace gorselProgramlamaProje.Forms
             selectedDateButton = sender as Button;
             selectedDateButton.BackColor = Color.MediumPurple;
 
-            selectedDate = (DateTime)selectedDateButton.Tag;
-            GorevleriYukle(selectedDate);
-        }
-
-        private void GorevleriYukle(DateTime tarih)
-        {
             flpGorevler.Controls.Clear();
-
-            if (!gorevListesi.ContainsKey(tarih))
-                gorevListesi[tarih] = new List<string>();
-
-            foreach (var gorev in gorevListesi[tarih])
-            {
-                GorevPanelEkle(gorev);
-            }
+            SahteGorevEkle("Java ödevini bitir");
+            SahteGorevEkle("Sunumu hazırla");
+            SahteGorevEkle("GitHub push kontrolü");
         }
 
-        private void BtnGorevEkle_Click(object sender, EventArgs e)
+        private void btnMenu_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtYeniGorev.Text))
-            {
-                if (!gorevListesi.ContainsKey(selectedDate))
-                    gorevListesi[selectedDate] = new List<string>();
-
-                gorevListesi[selectedDate].Add(txtYeniGorev.Text.Trim());
-                GorevPanelEkle(txtYeniGorev.Text.Trim());
-                txtYeniGorev.Clear();
-            }
+            panelMenu.Visible = !panelMenu.Visible;
         }
 
-        private void GorevPanelEkle(string metin)
+        private void SahteGorevEkle(string metin)
         {
             Panel gorevPanel = new Panel();
-            gorevPanel.Size = new Size(580, 40);
+            gorevPanel.Size = new Size(560, 40); // Panel genişliği artırıldı
             gorevPanel.BackColor = Color.FromArgb(40, 40, 40);
             gorevPanel.Margin = new Padding(5);
 
@@ -125,9 +99,12 @@ namespace gorselProgramlamaProje.Forms
             chkTamamlandi.ForeColor = Color.White;
             chkTamamlandi.Location = new Point(290, 10);
             chkTamamlandi.AutoSize = true;
+
             chkTamamlandi.CheckedChanged += (s, e) =>
             {
-                txt.Font = chkTamamlandi.Checked ? new Font(txt.Font, FontStyle.Strikeout) : new Font(txt.Font, FontStyle.Regular);
+                txt.Font = chkTamamlandi.Checked
+                    ? new Font(txt.Font, FontStyle.Strikeout)
+                    : new Font(txt.Font, FontStyle.Regular);
             };
 
             Button btnSil = new Button();
@@ -139,11 +116,7 @@ namespace gorselProgramlamaProje.Forms
             btnSil.FlatAppearance.BorderSize = 0;
             btnSil.Size = new Size(50, 25);
             btnSil.Location = new Point(470, 7);
-            btnSil.Click += (s, e) =>
-            {
-                flpGorevler.Controls.Remove(gorevPanel);
-                gorevListesi[selectedDate].Remove(metin);
-            };
+            btnSil.Click += (s, e) => flpGorevler.Controls.Remove(gorevPanel);
 
             gorevPanel.Controls.Add(txt);
             gorevPanel.Controls.Add(chkTamamlandi);
