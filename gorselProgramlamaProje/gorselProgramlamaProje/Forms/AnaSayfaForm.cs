@@ -105,13 +105,6 @@ namespace gorselProgramlamaProje.Forms
             // Boş
         }
 
-        private void btnAyarlar_Click(object sender, EventArgs e)
-        {
-            // ayarlar formunu aç
-            //this.Hide();
-            //var ayarlarForm = new AyarlarForm();
-            //ayarlarForm.ShowDialog();
-        }
 
         private void btnPerformans_Click(object sender, EventArgs e)
         {
@@ -121,10 +114,6 @@ namespace gorselProgramlamaProje.Forms
             performansForm.ShowDialog();
         }
 
-        private void btnAnaSayfa_Click(object sender, EventArgs e)
-        {
-            // Boş
-        }
 
         private void flpGorevler_Paint(object sender, PaintEventArgs e)
         {

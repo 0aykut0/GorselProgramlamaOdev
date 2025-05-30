@@ -31,7 +31,6 @@
             panelMenu = new Panel();
             button1 = new Button();
             btnPerformans = new Button();
-            btnTakvim = new Button();
             btnsSilinenler = new Button();
             btnPomodoro = new Button();
             btnMenu = new Button();
@@ -55,7 +54,6 @@
             panelMenu.BackColor = Color.FromArgb(64, 64, 64);
             panelMenu.Controls.Add(button1);
             panelMenu.Controls.Add(btnPerformans);
-            panelMenu.Controls.Add(btnTakvim);
             panelMenu.Controls.Add(btnsSilinenler);
             panelMenu.Controls.Add(btnPomodoro);
             panelMenu.Location = new Point(0, 49);
@@ -77,23 +75,13 @@
             // btnPerformans
             // 
             btnPerformans.BackColor = Color.FromArgb(255, 192, 192);
-            btnPerformans.Location = new Point(68, 229);
+            btnPerformans.Location = new Point(68, 194);
             btnPerformans.Name = "btnPerformans";
             btnPerformans.Size = new Size(139, 29);
             btnPerformans.TabIndex = 4;
             btnPerformans.Text = "Performans Takibi";
             btnPerformans.UseVisualStyleBackColor = false;
             btnPerformans.Click += btnPerformans_Click;
-            // 
-            // btnTakvim
-            // 
-            btnTakvim.BackColor = Color.FromArgb(255, 192, 192);
-            btnTakvim.Location = new Point(68, 194);
-            btnTakvim.Name = "btnTakvim";
-            btnTakvim.Size = new Size(139, 29);
-            btnTakvim.TabIndex = 3;
-            btnTakvim.Text = "Ayarlar";
-            btnTakvim.UseVisualStyleBackColor = false;
             // 
             // btnsSilinenler
             // 
@@ -274,7 +262,6 @@
         private Button btnAnaSayfa;
         private Button btnAyarlar;
         private Button btnPerformans;
-        private Button btnTakvim;
         private Button button1;
         private MonthCalendar monthCalendar1;
         private FlowLayoutPanel flpTarihler;
