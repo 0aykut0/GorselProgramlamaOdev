@@ -14,6 +14,8 @@ using System.Windows.Forms;
 using gorselProgramlamaProje.Managers;
 
 
+using gorselProgramlamaProje.Models;
+
 namespace gorselProgramlamaProje.Forms
 {
     public partial class SilinenlerForm : Form
@@ -54,6 +56,13 @@ namespace gorselProgramlamaProje.Forms
             dgvDeleted.GridColor = Color.Black;
             dgvDeleted.DefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#add8e6");
             dgvDeleted.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "colId",
+                HeaderText = "Id",
+                Visible = false
+            });
 
             dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -112,13 +121,13 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            int aktifKullaniciId = 1;
-            var silinenGorevler = SilinenGorevManager.SilinenGorevleriGetir(aktifKullaniciId);
+            // 🔄 Veritabanından veri çek
+            int userId = SessionManager.CurrentUserId;
+            var silinenler = SilinenGorevManager.SilinenGorevleriGetir(userId);
 
-            foreach (var gorev in silinenGorevler)
+            foreach (var gorev in silinenler)
             {
-                int rowIndex = dgvDeleted.Rows.Add(gorev.Baslik, gorev.OlusturmaTarihi);
-                dgvDeleted.Rows[rowIndex].Tag = gorev.Id;
+                dgvDeleted.Rows.Add(gorev.Id, gorev.Baslik, gorev.OlusturmaTarihi);
             }
         }
 
@@ -129,20 +138,19 @@ namespace gorselProgramlamaProje.Forms
             tiklamaKilitli = true;
 
             string columnName = dgvDeleted.Columns[e.ColumnIndex].Name;
-            var row = dgvDeleted.Rows[e.RowIndex];
-            string task = row.Cells["colTask"].Value?.ToString() ?? "";
-            int gorevId = (int)(row.Tag ?? 0);
+            int gorevId = Convert.ToInt32(dgvDeleted.Rows[e.RowIndex].Cells["colId"].Value);
+            string task = dgvDeleted.Rows[e.RowIndex].Cells["colTask"].Value?.ToString() ?? "";
 
             if (columnName == "colRestore")
             {
                 SilinenGorevManager.GoreviGeriAl(gorevId);
-                MessageBox.Show($"\"{task}\" geri yüklendi!", "Geri Yükle",
+                MessageBox.Show($"“{task}” geri yüklendi!", "Geri Yükle",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 dgvDeleted.Rows.RemoveAt(e.RowIndex);
             }
             else if (columnName == "colDelete")
             {
-                var result = MessageBox.Show($"\"{task}\" kalıcı olarak silinsin mi?", "Onay",
+                var result = MessageBox.Show($"“{task}” kalıcı olarak silinsin mi?", "Onay",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
