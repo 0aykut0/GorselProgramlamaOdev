@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace gorselProgramlamaProje.Forms
@@ -14,6 +9,9 @@ namespace gorselProgramlamaProje.Forms
     public partial class AnaSayfaForm : Form
     {
         private Button selectedDateButton = null;
+        private Dictionary<DateTime, List<string>> gorevler = new Dictionary<DateTime, List<string>>();
+        private TextBox txtYeniGorev;
+        private Button btnGorevEkle;
 
         public AnaSayfaForm()
         {
@@ -23,106 +21,169 @@ namespace gorselProgramlamaProje.Forms
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.SizeGripStyle = SizeGripStyle.Hide;
+            this.ClientSize = new Size(1300, 750); // Pencere boyutu büyütüldü
             this.BackColor = Color.Black;
             this.ForeColor = SystemColors.ActiveCaptionText;
+
+            txtYeniGorev = new TextBox();
+            txtYeniGorev.Size = new Size(400, 30);
+            txtYeniGorev.Location = new Point(300, 620);
+            txtYeniGorev.Font = new Font("Segoe UI", 10);
+            Controls.Add(txtYeniGorev);
+
+            btnGorevEkle = new Button();
+            btnGorevEkle.Text = "Görev Ekle";
+            btnGorevEkle.Size = new Size(100, 30);
+            btnGorevEkle.Location = new Point(710, 620);
+            btnGorevEkle.BackColor = Color.HotPink;
+            btnGorevEkle.ForeColor = Color.White;
+            btnGorevEkle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            btnGorevEkle.Click += BtnGorevEkle_Click;
+            Controls.Add(btnGorevEkle);
         }
 
         private void AnaSayfaForm_Load(object sender, EventArgs e)
         {
             DateTime bugun = DateTime.Today;
+
             flpTarihler.Controls.Clear();
-            flpTarihler.Height = 80; // Tarih paneli yüksekliği artırıldı
+            flpTarihler.Height = 80;
+            flpTarihler.Width = 1200; // Genişletildi
 
             for (int i = -3; i <= 3; i++)
             {
                 DateTime gun = bugun.AddDays(i);
 
                 Button btn = new Button();
-                btn.Size = new Size(90, 70); // Boyut artırıldı
+                btn.Size = new Size(120, 70);
                 btn.Margin = new Padding(5);
                 btn.FlatStyle = FlatStyle.Flat;
-                btn.BackColor = (i == 0) ? Color.MediumPurple : Color.LightGray;
                 btn.ForeColor = Color.White;
                 btn.Font = new Font("Segoe UI", 10, FontStyle.Bold);
                 btn.TextAlign = ContentAlignment.MiddleCenter;
-                btn.Text = gun.ToString("ddd\ndd", new CultureInfo("tr-TR"));
+                btn.Text = $"{gun.ToString("ddd", new CultureInfo("tr-TR"))}\n{gun:dd.MM.yyyy}";
                 btn.Tag = gun;
+
+                if (i == 0)
+                {
+                    btn.BackColor = Color.FromArgb(255, 192, 255);
+                    selectedDateButton = btn;
+                }
+                else
+                {
+                    btn.BackColor = Color.LightGray;
+                }
+
                 btn.Click += TarihButton_Click;
-
-                if (i == 0) selectedDateButton = btn;
-
                 flpTarihler.Controls.Add(btn);
             }
 
-            SahteGorevEkle("Java ödevini bitir");
-            SahteGorevEkle("Sunumu hazırla");
-            SahteGorevEkle("GitHub push kontrolü");
+            DateTime seciliTarih = DateTime.Today;
+            gorevler[seciliTarih] = new List<string> { "Java ödevini bitir", "Sunumu hazırla", "GitHub push kontrolü" };
+
+            GorevleriYukle(seciliTarih);
         }
 
         private void TarihButton_Click(object sender, EventArgs e)
         {
             if (selectedDateButton != null)
+            {
                 selectedDateButton.BackColor = Color.LightGray;
+                selectedDateButton.ForeColor = Color.White;
+            }
 
             selectedDateButton = sender as Button;
-            selectedDateButton.BackColor = Color.MediumPurple;
+            selectedDateButton.BackColor = Color.FromArgb(255, 192, 255);
+            selectedDateButton.ForeColor = Color.Black;
 
+            DateTime secilenTarih = (DateTime)selectedDateButton.Tag;
+            if (!gorevler.ContainsKey(secilenTarih))
+            {
+                gorevler[secilenTarih] = new List<string>();
+            }
+
+            GorevleriYukle(secilenTarih);
+        }
+
+        private void GorevleriYukle(DateTime tarih)
+        {
             flpGorevler.Controls.Clear();
-            SahteGorevEkle("Java ödevini bitir");
-            SahteGorevEkle("Sunumu hazırla");
-            SahteGorevEkle("GitHub push kontrolü");
+
+            if (!gorevler.ContainsKey(tarih)) return;
+
+            foreach (var metin in gorevler[tarih])
+            {
+                Panel gorevPanel = new Panel();
+                gorevPanel.Size = new Size(560, 40);
+                gorevPanel.BackColor = Color.FromArgb(40, 40, 40);
+                gorevPanel.Margin = new Padding(5);
+
+                TextBox txt = new TextBox();
+                txt.Text = metin;
+                txt.ReadOnly = true;
+                txt.Size = new Size(270, 25);
+                txt.Location = new Point(10, 7);
+                txt.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+                txt.ForeColor = Color.Black;
+                txt.BackColor = Color.White;
+
+                CheckBox chkTamamlandi = new CheckBox();
+                chkTamamlandi.Text = "Tamamlandı";
+                chkTamamlandi.ForeColor = Color.White;
+                chkTamamlandi.Location = new Point(290, 10);
+                chkTamamlandi.AutoSize = true;
+
+                chkTamamlandi.CheckedChanged += (s, e) =>
+                {
+                    txt.Font = chkTamamlandi.Checked
+                        ? new Font(txt.Font, FontStyle.Strikeout)
+                        : new Font(txt.Font, FontStyle.Regular);
+                };
+
+                Button btnSil = new Button();
+                btnSil.Text = "Sil";
+                btnSil.BackColor = Color.HotPink;
+                btnSil.ForeColor = Color.White;
+                btnSil.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+                btnSil.FlatStyle = FlatStyle.Flat;
+                btnSil.FlatAppearance.BorderSize = 0;
+                btnSil.Size = new Size(50, 25);
+                btnSil.Location = new Point(470, 7);
+                btnSil.Click += (s, e) =>
+                {
+                    gorevler[tarih].Remove(metin);
+                    GorevleriYukle(tarih);
+                };
+
+                gorevPanel.Controls.Add(txt);
+                gorevPanel.Controls.Add(chkTamamlandi);
+                gorevPanel.Controls.Add(btnSil);
+
+                flpGorevler.Controls.Add(gorevPanel);
+            }
+        }
+
+        private void BtnGorevEkle_Click(object sender, EventArgs e)
+        {
+            if (selectedDateButton == null) return;
+
+            DateTime seciliTarih = (DateTime)selectedDateButton.Tag;
+            string metin = txtYeniGorev.Text.Trim();
+
+            if (!string.IsNullOrEmpty(metin))
+            {
+                if (!gorevler.ContainsKey(seciliTarih))
+                    gorevler[seciliTarih] = new List<string>();
+
+                gorevler[seciliTarih].Add(metin);
+                txtYeniGorev.Clear();
+                GorevleriYukle(seciliTarih);
+            }
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
             panelMenu.Visible = !panelMenu.Visible;
-        }
-
-        private void SahteGorevEkle(string metin)
-        {
-            Panel gorevPanel = new Panel();
-            gorevPanel.Size = new Size(560, 40); // Panel genişliği artırıldı
-            gorevPanel.BackColor = Color.FromArgb(40, 40, 40);
-            gorevPanel.Margin = new Padding(5);
-
-            TextBox txt = new TextBox();
-            txt.Text = metin;
-            txt.ReadOnly = true;
-            txt.Size = new Size(270, 25);
-            txt.Location = new Point(10, 7);
-            txt.Font = new Font("Segoe UI", 9, FontStyle.Regular);
-            txt.ForeColor = Color.Black;
-            txt.BackColor = Color.White;
-
-            CheckBox chkTamamlandi = new CheckBox();
-            chkTamamlandi.Text = "Tamamlandı";
-            chkTamamlandi.ForeColor = Color.White;
-            chkTamamlandi.Location = new Point(290, 10);
-            chkTamamlandi.AutoSize = true;
-
-            chkTamamlandi.CheckedChanged += (s, e) =>
-            {
-                txt.Font = chkTamamlandi.Checked
-                    ? new Font(txt.Font, FontStyle.Strikeout)
-                    : new Font(txt.Font, FontStyle.Regular);
-            };
-
-            Button btnSil = new Button();
-            btnSil.Text = "Sil";
-            btnSil.BackColor = Color.HotPink;
-            btnSil.ForeColor = Color.White;
-            btnSil.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            btnSil.FlatStyle = FlatStyle.Flat;
-            btnSil.FlatAppearance.BorderSize = 0;
-            btnSil.Size = new Size(50, 25);
-            btnSil.Location = new Point(470, 7);
-            btnSil.Click += (s, e) => flpGorevler.Controls.Remove(gorevPanel);
-
-            gorevPanel.Controls.Add(txt);
-            gorevPanel.Controls.Add(chkTamamlandi);
-            gorevPanel.Controls.Add(btnSil);
-
-            flpGorevler.Controls.Add(gorevPanel);
         }
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e) { }
