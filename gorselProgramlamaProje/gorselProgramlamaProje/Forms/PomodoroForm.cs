@@ -13,13 +13,15 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Media;
+using gorselProgramlamaProje.Managers;
+
 
 namespace gorselProgramlamaProje.Forms
 {
     public partial class PomodoroForm : Form
     {
         // Süreler
-        private readonly int shortTime = 10 * 60;
+        private readonly int shortTime = 1 * 60;
         private readonly int mediumTime = 25 * 60;
         private readonly int longTime = 45 * 60;
         private readonly int breakDuration = 5 * 60;
@@ -69,7 +71,7 @@ namespace gorselProgramlamaProje.Forms
             // Müzik başlat
             try
             {
-                player = new SoundPlayer(@"C:\\Users\\esmah\\OneDrive\\Desktop\\GorselProgramlamaOdev\\gorselProgramlamaProje\\gorselProgramlamaProje\\assets\\music.wav");
+                player = new SoundPlayer(@"C:\Users\mayku\Desktop\pomodoro\GorselProgramlamaOdev\gorselProgramlamaProje\gorselProgramlamaProje\assets\music.wav");
                 player.PlayLooping();
             }
             catch
@@ -144,6 +146,7 @@ namespace gorselProgramlamaProje.Forms
             }
             else
             {
+                HandleIntervalCompletion();
                 isOnBreak = !isOnBreak;
                 timeLeft = isOnBreak ? breakDuration : GetSelectedWorkDuration();
 
@@ -177,5 +180,23 @@ namespace gorselProgramlamaProje.Forms
                 isMuted = true;
             }
         }
+        /// <summary>
+        /// Çalışma turu bittiğinde DB’ye dakika ekler,
+        /// mola turunda hiçbir şey yapmaz.
+        /// </summary>
+        private void HandleIntervalCompletion()
+        {
+            // isOnBreak == false demek, az önce bir çalışma turu bitti
+            if (!isOnBreak)
+            {
+                // workDuration saniye cinsinden, dakikaya çevir:
+                int completedMinutes = workDuration / 60;
+                GunlukOzetManager.AddPomodoroDakika(
+                    completedMinutes,
+                    SessionManager.CurrentUserId
+                );
+            }
+        }
+
     }
 }
