@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using gorselProgramlamaProje.Managers;
 
+
 namespace gorselProgramlamaProje.Forms
 {
     public partial class SilinenlerForm : Form
@@ -51,11 +52,9 @@ namespace gorselProgramlamaProje.Forms
 
             dgvDeleted.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvDeleted.GridColor = Color.Black;
-            dgvDeleted.DefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#add8e6"); // Seçim rengi mavi
-
+            dgvDeleted.DefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#add8e6");
             dgvDeleted.DefaultCellStyle.SelectionForeColor = Color.Black;
 
-            // 1) Görev
             dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colTask",
@@ -70,7 +69,6 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // 2) Tarih
             dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colDate",
@@ -86,7 +84,6 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // 3) Geri Al
             dgvDeleted.Columns.Add(new DataGridViewButtonColumn
             {
                 Name = "colRestore",
@@ -101,7 +98,6 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // 4) Kalıcı Sil
             dgvDeleted.Columns.Add(new DataGridViewButtonColumn
             {
                 Name = "colDelete",
@@ -116,10 +112,14 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // Test verileri (veritabanı entegrasyonuna kadar)
-            dgvDeleted.Rows.Add("Test Görev 1", DateTime.Now.AddDays(-1));
-            dgvDeleted.Rows.Add("Test Görev 2", DateTime.Now.AddHours(-3));
-            dgvDeleted.Rows.Add("Test Görev 3", DateTime.Now.AddDays(-2));
+            int aktifKullaniciId = 1;
+            var silinenGorevler = SilinenGorevManager.SilinenGorevleriGetir(aktifKullaniciId);
+
+            foreach (var gorev in silinenGorevler)
+            {
+                int rowIndex = dgvDeleted.Rows.Add(gorev.Baslik, gorev.OlusturmaTarihi);
+                dgvDeleted.Rows[rowIndex].Tag = gorev.Id;
+            }
         }
 
         private async void dgvDeleted_CellContentClick(object? sender, DataGridViewCellEventArgs e)
@@ -129,25 +129,29 @@ namespace gorselProgramlamaProje.Forms
             tiklamaKilitli = true;
 
             string columnName = dgvDeleted.Columns[e.ColumnIndex].Name;
-            string task = dgvDeleted.Rows[e.RowIndex].Cells["colTask"].Value?.ToString() ?? "";
+            var row = dgvDeleted.Rows[e.RowIndex];
+            string task = row.Cells["colTask"].Value?.ToString() ?? "";
+            int gorevId = (int)(row.Tag ?? 0);
 
             if (columnName == "colRestore")
             {
-                MessageBox.Show($"“{task}” geri yüklendi!", "Geri Yükle",
+                SilinenGorevManager.GoreviGeriAl(gorevId);
+                MessageBox.Show($"\"{task}\" geri yüklendi!", "Geri Yükle",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 dgvDeleted.Rows.RemoveAt(e.RowIndex);
             }
             else if (columnName == "colDelete")
             {
-                var result = MessageBox.Show($"“{task}” kalıcı olarak silinsin mi?", "Onay",
+                var result = MessageBox.Show($"\"{task}\" kalıcı olarak silinsin mi?", "Onay",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
+                    SilinenGorevManager.GoreviKaliciSil(gorevId);
                     dgvDeleted.Rows.RemoveAt(e.RowIndex);
                 }
             }
 
-            await Task.Delay(150); // Çift tıklama engellemek için küçük gecikme
+            await Task.Delay(150);
             tiklamaKilitli = false;
         }
     }
