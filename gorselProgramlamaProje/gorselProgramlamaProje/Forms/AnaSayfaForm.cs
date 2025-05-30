@@ -13,7 +13,7 @@ namespace gorselProgramlamaProje.Forms
 {
     public partial class AnaSayfaForm : Form
     {
-        private int currentUserId=SessionManager.CurrentUserId;
+        private int currentUserId = SessionManager.CurrentUserId;
         private string currentUsername = SessionManager.CurrentUsername;
 
         public AnaSayfaForm()
@@ -26,7 +26,8 @@ namespace gorselProgramlamaProje.Forms
             this.MinimizeBox = false;
             this.SizeGripStyle = SizeGripStyle.Hide;
             this.BackColor = Color.Black; // Arka plan tamamen siyah
-            this.ForeColor = SystemColors.ActiveCaptionText;        }
+            this.ForeColor = SystemColors.ActiveCaptionText;
+        }
 
         private void AnaSayfaForm_Load(object sender, EventArgs e)
         {
@@ -113,7 +114,6 @@ namespace gorselProgramlamaProje.Forms
             // Boş
         }
 
-
         private void btnPerformans_Click(object sender, EventArgs e)
         {
             // performans formunu aç
@@ -122,7 +122,6 @@ namespace gorselProgramlamaProje.Forms
             performansForm.ShowDialog();
         }
 
-
         private void flpGorevler_Paint(object sender, PaintEventArgs e)
         {
             // Boş
@@ -130,10 +129,10 @@ namespace gorselProgramlamaProje.Forms
 
         private void btnPomodoro_Click(object sender, EventArgs e)
         {
-            // pomodoro formunu aç
-            this.Visible = false; // Ana sayfa formunu gizle
-            var pomodoroForm = new PomodoroForm();
-            pomodoroForm.ShowDialog();
+            this.Hide();
+            PomodoroForm yeniForm = new(this);
+            yeniForm.ShowDialog(); // Show yerine ShowDialog
+            this.Show(); // Pomodoro kapanınca geri göster
         }
 
         private void btnsSilinenler_Click(object sender, EventArgs e)
@@ -152,8 +151,8 @@ namespace gorselProgramlamaProje.Forms
             var GunBitirmeForm = new GunSonu();
             GunBitirmeForm.ShowDialog(); // Gün sonu formunu modal olarak aç
             this.Close(); // Ana sayfa formunu kapat
-            
-            
+
+
         }
     }
 }

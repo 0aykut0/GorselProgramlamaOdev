@@ -1,36 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace gorselProgramlamaProje.Forms
 {
     public partial class PomodoroForm : Form
     {
-        // Süreler
         private readonly int shortTime = 10 * 60;
         private readonly int mediumTime = 25 * 60;
         private readonly int longTime = 45 * 60;
         private readonly int breakDuration = 5 * 60;
 
-        private int workDuration;    // Seçilen süre
-        private int timeLeft;        // Geri sayım süresi
+        private int workDuration;
+        private int timeLeft;
         private bool isRunning = false;
         private bool isOnBreak = false;
 
-        public PomodoroForm()
+        private Form anaSayfaForm; // REFERANS
+
+        // Referanslı constructor
+        public PomodoroForm(Form geriDonulecekForm)
         {
             InitializeComponent();
+            anaSayfaForm = geriDonulecekForm;
 
             this.Load += PomodoroForm_Load;
 
@@ -47,13 +40,11 @@ namespace gorselProgramlamaProje.Forms
 
         private void PomodoroForm_Load(object? sender, EventArgs e)
         {
-            // Başlangıç sürelerini ayarla
             isOnBreak = false;
             workDuration = GetSelectedWorkDuration();
             timeLeft = workDuration;
             isRunning = false;
 
-            // Daire görünümlü panel
             var path = new GraphicsPath();
             path.AddEllipse(0, 0, pnlTimer.Width, pnlTimer.Height);
             pnlTimer.Region = new Region(path);
@@ -70,7 +61,7 @@ namespace gorselProgramlamaProje.Forms
             else if (rdoLong.Checked)
                 return longTime;
             else
-                return mediumTime; // Varsayılan
+                return mediumTime;
         }
 
         private void UpdateLabel()
@@ -81,7 +72,7 @@ namespace gorselProgramlamaProje.Forms
 
         private void RadioButton_CheckedChanged(object? sender, EventArgs e)
         {
-            if (isRunning) return; // Sayaç çalışıyorsa değiştirme
+            if (isRunning) return;
 
             workDuration = GetSelectedWorkDuration();
             timeLeft = workDuration;
@@ -93,7 +84,6 @@ namespace gorselProgramlamaProje.Forms
             if (!isRunning)
             {
                 workDuration = GetSelectedWorkDuration();
-
                 if (!isOnBreak)
                     timeLeft = workDuration;
 
@@ -148,14 +138,11 @@ namespace gorselProgramlamaProje.Forms
             }
         }
 
-
-
+        // Geri butonuna tıklanınca çalışacak
         private void button1_Click_1(object sender, EventArgs e)
         {
-            this.Hide();
-            var ana = new AnaSayfaForm();
-            ana.Show();
+            anaSayfaForm.Show(); // AnaSayfaForm tekrar gösterilir
+            this.Close();        // PomodoroForm kapanır
         }
     }
-    
 }
