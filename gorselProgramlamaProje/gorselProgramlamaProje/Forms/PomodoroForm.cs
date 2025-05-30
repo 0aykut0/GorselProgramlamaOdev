@@ -198,5 +198,26 @@ namespace gorselProgramlamaProje.Forms
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // 1) GunSonu formunu gizle
+            this.Hide();
+
+            // 2) AnaSayfa formunu oluştur ve göster
+            var ana = new AnaSayfaForm();
+            ana.Show();
+
+            // 3) (İsteğe bağlı) Eğer GunSonu formunu işaretli olarak kapatmak istiyorsanız,
+            //    ana.Show()'dan sonra this.Close(); diyebilirsiniz. Ama Hide(), uygulamanın
+            // 
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Hide();
+            var ana = new AnaSayfaForm();
+            ana.Show();
+        }
     }
+    
 }

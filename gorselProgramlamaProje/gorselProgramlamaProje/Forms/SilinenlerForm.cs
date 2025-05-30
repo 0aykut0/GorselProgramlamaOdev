@@ -150,5 +150,12 @@ namespace gorselProgramlamaProje.Forms
             await Task.Delay(150); // Çift tıklama engellemek için küçük gecikme
             tiklamaKilitli = false;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var ana = new AnaSayfaForm();
+            ana.Show();
+        }
     }
 }

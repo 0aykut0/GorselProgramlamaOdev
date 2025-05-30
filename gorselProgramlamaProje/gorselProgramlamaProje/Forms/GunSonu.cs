@@ -21,5 +21,12 @@ namespace gorselProgramlamaProje.Forms
         {
 
         }
+
+        private void btnGeri_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var ana = new AnaSayfaForm();
+            ana.Show(); 
+        }
     }
 }
