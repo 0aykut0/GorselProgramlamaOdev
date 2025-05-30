@@ -161,6 +161,14 @@ namespace gorselProgramlamaProje.Forms
             //    ana.Show()'dan sonra this.Close(); diyebilirsiniz. Ama Hide(), uygulamanın
             // 
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Hide();
+            var ana = new AnaSayfaForm();
+            ana.Show();
+        }
     }
+    
 }
 

@@ -36,6 +36,7 @@
             colDate = new DataGridViewTextBoxColumn();
             colDelete = new DataGridViewButtonColumn();
             colRestore = new DataGridViewButtonColumn();
+            button1 = new Button();
             pnlContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDeleted).BeginInit();
             SuspendLayout();
@@ -45,9 +46,10 @@
             pnlContainer.BackColor = SystemColors.ActiveCaptionText;
             pnlContainer.BorderStyle = BorderStyle.FixedSingle;
             pnlContainer.Controls.Add(dgvDeleted);
-            pnlContainer.Location = new Point(61, 54);
+            pnlContainer.Location = new Point(53, 40);
+            pnlContainer.Margin = new Padding(3, 2, 3, 2);
             pnlContainer.Name = "pnlContainer";
-            pnlContainer.Size = new Size(727, 396);
+            pnlContainer.Size = new Size(636, 298);
             pnlContainer.TabIndex = 0;
             // 
             // dgvDeleted
@@ -59,12 +61,13 @@
             dgvDeleted.Columns.AddRange(new DataGridViewColumn[] { colTask, colDate, colDelete, colRestore });
             dgvDeleted.Dock = DockStyle.Fill;
             dgvDeleted.Location = new Point(0, 0);
+            dgvDeleted.Margin = new Padding(3, 2, 3, 2);
             dgvDeleted.Name = "dgvDeleted";
             dgvDeleted.ReadOnly = true;
             dgvDeleted.RowHeadersVisible = false;
             dgvDeleted.RowHeadersWidth = 51;
             dgvDeleted.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDeleted.Size = new Size(725, 394);
+            dgvDeleted.Size = new Size(634, 296);
             dgvDeleted.TabIndex = 0;
             dgvDeleted.CellContentClick += dgvDeleted_CellContentClick;
             // 
@@ -109,13 +112,27 @@
             colRestore.Text = "Geri Yükle ";
             colRestore.Width = 80;
             // 
+            // button1
+            // 
+            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            button1.ForeColor = Color.Pink;
+            button1.Location = new Point(12, 12);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 1;
+            button1.Text = "Geri";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // SilinenlerForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(700, 338);
+            Controls.Add(button1);
             Controls.Add(pnlContainer);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "SilinenlerForm";
             Text = "SilinenlerForm";
             pnlContainer.ResumeLayout(false);
@@ -131,5 +148,6 @@
         private DataGridViewTextBoxColumn colDate;
         private DataGridViewButtonColumn colDelete;
         private DataGridViewButtonColumn colRestore;
+        private Button button1;
     }
 }
