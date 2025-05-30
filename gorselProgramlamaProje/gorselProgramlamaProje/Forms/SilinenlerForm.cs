@@ -17,6 +17,8 @@ namespace gorselProgramlamaProje.Forms
 {
     public partial class SilinenlerForm : Form
     {
+        private bool tiklamaKilitli = false;
+
         public SilinenlerForm()
         {
             InitializeComponent();
@@ -26,7 +28,6 @@ namespace gorselProgramlamaProje.Forms
 
         private void SilinenlerForm_Load(object? sender, EventArgs e)
         {
-            // — Sıfırla ve tasarla
             dgvDeleted.Columns.Clear();
             dgvDeleted.AutoGenerateColumns = false;
             dgvDeleted.Dock = DockStyle.Fill;
@@ -38,7 +39,6 @@ namespace gorselProgramlamaProje.Forms
 
             var pink = ColorTranslator.FromHtml("#fcbec8");
 
-            // — Başlık satırı
             dgvDeleted.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
             {
                 BackColor = pink,
@@ -51,7 +51,8 @@ namespace gorselProgramlamaProje.Forms
 
             dgvDeleted.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvDeleted.GridColor = Color.Black;
-            dgvDeleted.DefaultCellStyle.SelectionBackColor = ControlPaint.Dark(pink);
+            dgvDeleted.DefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#add8e6"); // Seçim rengi mavi
+
             dgvDeleted.DefaultCellStyle.SelectionForeColor = Color.Black;
 
             // 1) Görev
@@ -115,33 +116,39 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // — Test verisi
+            // Test verileri (veritabanı entegrasyonuna kadar)
             dgvDeleted.Rows.Add("Test Görev 1", DateTime.Now.AddDays(-1));
             dgvDeleted.Rows.Add("Test Görev 2", DateTime.Now.AddHours(-3));
             dgvDeleted.Rows.Add("Test Görev 3", DateTime.Now.AddDays(-2));
         }
 
-        private void dgvDeleted_CellContentClick(object? sender, DataGridViewCellEventArgs e)
+        private async void dgvDeleted_CellContentClick(object? sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < 0 || tiklamaKilitli) return;
 
-            var col = dgvDeleted.Columns[e.ColumnIndex].Name;
-            var task = dgvDeleted.Rows[e.RowIndex].Cells["colTask"].Value?.ToString();
+            tiklamaKilitli = true;
 
-            if (col == "colRestore")
+            string columnName = dgvDeleted.Columns[e.ColumnIndex].Name;
+            string task = dgvDeleted.Rows[e.RowIndex].Cells["colTask"].Value?.ToString() ?? "";
+
+            if (columnName == "colRestore")
             {
-                dgvDeleted.Rows.RemoveAt(e.RowIndex);
                 MessageBox.Show($"“{task}” geri yüklendi!", "Geri Yükle",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dgvDeleted.Rows.RemoveAt(e.RowIndex);
             }
-            else if (col == "colDelete")
+            else if (columnName == "colDelete")
             {
-                if (MessageBox.Show($"“{task}” kalıcı silinsin mi?", "Onay",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                var result = MessageBox.Show($"“{task}” kalıcı olarak silinsin mi?", "Onay",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
                 {
                     dgvDeleted.Rows.RemoveAt(e.RowIndex);
                 }
             }
+
+            await Task.Delay(150); // Çift tıklama engellemek için küçük gecikme
+            tiklamaKilitli = false;
         }
     }
 }
