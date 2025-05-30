@@ -38,6 +38,7 @@
             rdoShort = new RadioButton();
             rdoMedium = new RadioButton();
             rdoLong = new RadioButton();
+            btnMute = new Button();
             button1 = new Button();
             pnlTimer.SuspendLayout();
             SuspendLayout();
@@ -158,6 +159,14 @@
             rdoLong.Text = "YOĞUN (45 dk)";
             rdoLong.UseVisualStyleBackColor = false;
             // 
+            // btnMute
+            // 
+            btnMute.Location = new Point(736, 12);
+            btnMute.Name = "btnMute";
+            btnMute.Size = new Size(33, 32);
+            btnMute.TabIndex = 7;
+            btnMute.Text = "🔇";
+            btnMute.UseVisualStyleBackColor = true;
             // button1
             // 
             button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
@@ -175,6 +184,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.MenuText;
+            ClientSize = new Size(793, 455);
+            Controls.Add(btnMute);
             ClientSize = new Size(694, 341);
             Controls.Add(button1);
             Controls.Add(rdoLong);
@@ -208,6 +219,7 @@
         private RadioButton rdoShort;
         private RadioButton rdoMedium;
         private RadioButton rdoLong;
+        private Button btnMute;
         private Button button1;
     }
 }

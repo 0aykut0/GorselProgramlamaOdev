@@ -42,6 +42,9 @@ namespace gorselProgramlamaProje.Forms
             var kullanici = KullaniciManager.KullaniciGirisYap(kullaniciAdi, sifre);
             if (kullanici != null)
             {
+                SessionManager.CurrentUserId = kullanici.Id;
+                SessionManager.CurrentUsername = kullanici.KullaniciAdi;
+
                 MessageBox.Show("Giriş başarılı!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
                 var anaForm = new AnaSayfaForm(); // AnaForm constructor'ı Kullanici almalı

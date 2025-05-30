@@ -13,6 +13,9 @@ namespace gorselProgramlamaProje.Forms
 {
     public partial class AnaSayfaForm : Form
     {
+        private int currentUserId=SessionManager.CurrentUserId;
+        private string currentUsername = SessionManager.CurrentUsername;
+
         public AnaSayfaForm()
         {
             InitializeComponent();
@@ -23,11 +26,16 @@ namespace gorselProgramlamaProje.Forms
             this.MinimizeBox = false;
             this.SizeGripStyle = SizeGripStyle.Hide;
             this.BackColor = Color.Black; // Arka plan tamamen siyah
-            this.ForeColor = SystemColors.ActiveCaptionText;
-        }
+            this.ForeColor = SystemColors.ActiveCaptionText;        }
 
         private void AnaSayfaForm_Load(object sender, EventArgs e)
         {
+            MessageBox.Show(
+            $"Hoş geldin, {currentUsername}!",
+            "Hoşgeldiniz",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information
+        );
             DateTime bugun = DateTime.Today;
 
             flpTarihler.Controls.Clear();
@@ -109,7 +117,7 @@ namespace gorselProgramlamaProje.Forms
         private void btnPerformans_Click(object sender, EventArgs e)
         {
             // performans formunu aç
-            this.Hide();
+            this.Visible = false;
             var performansForm = new PerformansForm();
             performansForm.ShowDialog();
         }
@@ -123,7 +131,7 @@ namespace gorselProgramlamaProje.Forms
         private void btnPomodoro_Click(object sender, EventArgs e)
         {
             // pomodoro formunu aç
-            this.Hide();
+            this.Visible = false; // Ana sayfa formunu gizle
             var pomodoroForm = new PomodoroForm();
             pomodoroForm.ShowDialog();
         }
@@ -131,7 +139,7 @@ namespace gorselProgramlamaProje.Forms
         private void btnsSilinenler_Click(object sender, EventArgs e)
         {
             // silinenler formunu aç
-            this.Hide();
+            this.Visible = false; // Ana sayfa formunu gizle
             var silinenlerForm = new SilinenlerForm();
             silinenlerForm.ShowDialog();
 

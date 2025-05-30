@@ -15,6 +15,12 @@ public static class KullaniciManager
         context.Kullanicilar.Add(kullanici);
         context.SaveChanges();
     }
+    public static int KullaniciIDGetir(string kullaniciAdi)
+    {
+        using var context = new UygulamaDbContext();
+        var kullanici = context.Kullanicilar.FirstOrDefault(k => k.KullaniciAdi == kullaniciAdi);
+        return kullanici?.Id ?? 0; // Kullanıcı bulunamazsa 0 döner
+    }
 
     // Giriş işlemi: kullanıcı adı ve şifre kontrolü
     public static Kullanici? KullaniciGirisYap(string kullaniciAdi, string sifre)
@@ -54,4 +60,5 @@ public static class KullaniciManager
         var hash = sha256.ComputeHash(bytes);
         return Convert.ToBase64String(hash);
     }
+
 }
