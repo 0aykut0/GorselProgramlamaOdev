@@ -108,9 +108,9 @@ namespace gorselProgramlamaProje.Forms
         private void btnAyarlar_Click(object sender, EventArgs e)
         {
             // ayarlar formunu aç
-            //this.Hide();
-            //var ayarlarForm = new AyarlarForm();
-            //ayarlarForm.ShowDialog();
+            this.Hide();
+            var ayarlarForm = new Ayarlar();
+            ayarlarForm.ShowDialog();
         }
 
         private void btnPerformans_Click(object sender, EventArgs e)
