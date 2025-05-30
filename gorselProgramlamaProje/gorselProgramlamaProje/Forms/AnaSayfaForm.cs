@@ -21,25 +21,31 @@ namespace gorselProgramlamaProje.Forms
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.SizeGripStyle = SizeGripStyle.Hide;
-            this.ClientSize = new Size(1300, 750); // Pencere boyutu büyütüldü
+            this.ClientSize = new Size(1300, 800);
             this.BackColor = Color.Black;
-            this.ForeColor = SystemColors.ActiveCaptionText;
 
             txtYeniGorev = new TextBox();
-            txtYeniGorev.Size = new Size(400, 30);
-            txtYeniGorev.Location = new Point(300, 620);
+            txtYeniGorev.Size = new Size(500, 30);
+            txtYeniGorev.Location = new Point(280, 700);
             txtYeniGorev.Font = new Font("Segoe UI", 10);
             Controls.Add(txtYeniGorev);
 
             btnGorevEkle = new Button();
             btnGorevEkle.Text = "Görev Ekle";
             btnGorevEkle.Size = new Size(100, 30);
-            btnGorevEkle.Location = new Point(710, 620);
+            btnGorevEkle.Location = new Point(800, 700);
             btnGorevEkle.BackColor = Color.HotPink;
             btnGorevEkle.ForeColor = Color.White;
             btnGorevEkle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
             btnGorevEkle.Click += BtnGorevEkle_Click;
             Controls.Add(btnGorevEkle);
+
+            btnGunuBitir.Text = "Günü Bitir";
+            btnGunuBitir.Size = new Size(120, 40);
+            btnGunuBitir.Location = new Point(this.ClientSize.Width - 140, this.ClientSize.Height - 60);
+            btnGunuBitir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnGunuBitir.BackColor = Color.FromArgb(255, 192, 192);
+            btnGunuBitir.Font = new Font("Segoe UI", 10, FontStyle.Bold);
         }
 
         private void AnaSayfaForm_Load(object sender, EventArgs e)
@@ -48,7 +54,7 @@ namespace gorselProgramlamaProje.Forms
 
             flpTarihler.Controls.Clear();
             flpTarihler.Height = 80;
-            flpTarihler.Width = 1200; // Genişletildi
+            flpTarihler.Width = 1200;
 
             for (int i = -3; i <= 3; i++)
             {
@@ -66,7 +72,7 @@ namespace gorselProgramlamaProje.Forms
 
                 if (i == 0)
                 {
-                    btn.BackColor = Color.FromArgb(255, 192, 255);
+                    btn.BackColor = Color.FromArgb(255, 192, 192);
                     selectedDateButton = btn;
                 }
                 else
@@ -93,7 +99,7 @@ namespace gorselProgramlamaProje.Forms
             }
 
             selectedDateButton = sender as Button;
-            selectedDateButton.BackColor = Color.FromArgb(255, 192, 255);
+            selectedDateButton.BackColor = Color.FromArgb(255, 192, 192);
             selectedDateButton.ForeColor = Color.Black;
 
             DateTime secilenTarih = (DateTime)selectedDateButton.Tag;
@@ -162,7 +168,15 @@ namespace gorselProgramlamaProje.Forms
                 flpGorevler.Controls.Add(gorevPanel);
             }
         }
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            // Şu anda kullanılmıyor, ama tasarımda referans var
+        }
 
+        private void monthCalendar1_DateChanged_1(object sender, DateRangeEventArgs e)
+        {
+            // Şu anda kullanılmıyor, ama tasarımda referans var
+        }
         private void BtnGorevEkle_Click(object sender, EventArgs e)
         {
             if (selectedDateButton == null) return;
@@ -180,17 +194,17 @@ namespace gorselProgramlamaProje.Forms
                 GorevleriYukle(seciliTarih);
             }
         }
-
+        private void btnAyarlar_Click(object sender, EventArgs e)
+        {
+            // Ayarlar formu varsa burada açılabilir, şu anlık boş.
+            MessageBox.Show("Ayarlar butonuna tıklandı.");
+        }
         private void btnMenu_Click(object sender, EventArgs e)
         {
             panelMenu.Visible = !panelMenu.Visible;
         }
 
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e) { }
-        private void monthCalendar1_DateChanged_1(object sender, DateRangeEventArgs e) { }
-        private void btnAyarlar_Click(object sender, EventArgs e) { }
         private void btnPerformans_Click(object sender, EventArgs e) { }
         private void btnAnaSayfa_Click(object sender, EventArgs e) { }
-        private void flpGorevler_Paint(object sender, PaintEventArgs e) { }
     }
 }
