@@ -13,6 +13,9 @@ namespace gorselProgramlamaProje.Forms
 {
     public partial class AnaSayfaForm : Form
     {
+        private int currentUserId=SessionManager.CurrentUserId;
+        private string currentUsername = SessionManager.CurrentUsername;
+
         public AnaSayfaForm()
         {
             InitializeComponent();
@@ -23,11 +26,16 @@ namespace gorselProgramlamaProje.Forms
             this.MinimizeBox = false;
             this.SizeGripStyle = SizeGripStyle.Hide;
             this.BackColor = Color.Black; // Arka plan tamamen siyah
-            this.ForeColor = SystemColors.ActiveCaptionText;
-        }
+            this.ForeColor = SystemColors.ActiveCaptionText;        }
 
         private void AnaSayfaForm_Load(object sender, EventArgs e)
         {
+            MessageBox.Show(
+            $"Hoş geldin, {currentUsername}!",
+            "Hoşgeldiniz",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information
+        );
             DateTime bugun = DateTime.Today;
 
             flpTarihler.Controls.Clear();
