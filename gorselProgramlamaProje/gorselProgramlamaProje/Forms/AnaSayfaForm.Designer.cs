@@ -104,6 +104,7 @@
             btnsSilinenler.TabIndex = 2;
             btnsSilinenler.Text = "Silinenler";
             btnsSilinenler.UseVisualStyleBackColor = false;
+            btnsSilinenler.Click += btnsSilinenler_Click;
             // 
             // btnPomodoro
             // 
@@ -114,6 +115,7 @@
             btnPomodoro.TabIndex = 1;
             btnPomodoro.Text = "Pomodoro";
             btnPomodoro.UseVisualStyleBackColor = false;
+            btnPomodoro.Click += btnPomodoro_Click;
             // 
             // btnMenu
             // 
@@ -239,6 +241,7 @@
             btnGunuBitir.TabIndex = 5;
             btnGunuBitir.Text = "Günü Bitir";
             btnGunuBitir.UseVisualStyleBackColor = false;
+            btnGunuBitir.Click += btnGunuBitir_Click;
             // 
             // AnaSayfaForm
             // 
