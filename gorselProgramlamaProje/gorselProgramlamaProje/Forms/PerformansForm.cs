@@ -33,22 +33,31 @@ namespace gorselProgramlamaProje.Forms
         private void PerformansForm_Load(object sender, EventArgs e)
         {
             this.BackColor = Color.Black;
-            this.ClientSize = new Size(900, 600);
+            this.ClientSize = new Size(1000, 600);
 
+            // Arka panel (katmanlı görünüm)
+            Panel tarihArkaPanel = new Panel();
+            tarihArkaPanel.Size = new Size(820, 100);
+            tarihArkaPanel.Location = new Point(90, 20);
+            tarihArkaPanel.BackColor = Color.FromArgb(30, 30, 30);
+            this.Controls.Add(tarihArkaPanel);
+
+            // Tarih butonları için FlowLayoutPanel
             flpTarihler = new FlowLayoutPanel();
-            flpTarihler.Location = new Point(90, 30);
-            flpTarihler.Size = new Size(720, 60);
-            flpTarihler.BackColor = Color.FromArgb(40, 40, 40);
+            flpTarihler.Location = new Point(10, 10);
+            flpTarihler.Size = new Size(800, 80);
+            flpTarihler.BackColor = Color.FromArgb(30, 30, 30);
             flpTarihler.WrapContents = false;
-            Controls.Add(flpTarihler);
+            tarihArkaPanel.Controls.Add(flpTarihler);
 
+            // Bilgi paneli
             panelBilgi = new Panel();
             panelBilgi.Size = new Size(600, 150);
-            panelBilgi.Location = new Point(90, 110);
+            panelBilgi.Location = new Point(90, 130);
             panelBilgi.BackColor = Color.FromArgb(40, 40, 40);
             Controls.Add(panelBilgi);
 
-            // Geri Dön Butonu (Güncellenmiş)
+            // Geri Dön butonu
             geriDonButton = new Button();
             geriDonButton.Text = "← Geri Dön";
             geriDonButton.Size = new Size(120, 40);
@@ -56,29 +65,36 @@ namespace gorselProgramlamaProje.Forms
             geriDonButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             geriDonButton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             geriDonButton.BackColor = Color.FromArgb(255, 192, 192);
+            geriDonButton.ForeColor = Color.Black;
             geriDonButton.FlatStyle = FlatStyle.Flat;
             geriDonButton.FlatAppearance.BorderSize = 0;
             geriDonButton.TextAlign = ContentAlignment.MiddleCenter;
             geriDonButton.Click += (s, ev) => this.Close();
             Controls.Add(geriDonButton);
 
-            // Tarih Butonları
+            // Tarih butonları oluşturuluyor
             DateTime bugun = new DateTime(2025, 5, 29);
             for (int i = -6; i <= 0; i++)
             {
                 DateTime tarih = bugun.AddDays(i);
                 Button btnTarih = new Button();
-                btnTarih.Size = new Size(80, 50);
-                btnTarih.Text = tarih.ToString("ddd\n dd");
-                btnTarih.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+                btnTarih.Size = new Size(110, 70);
+                btnTarih.Text = $"{tarih:ddd}\n{tarih:dd.MM.yyyy}";
+                btnTarih.Font = new Font("Segoe UI", 10.5f, FontStyle.Bold);
+                btnTarih.TextAlign = ContentAlignment.MiddleCenter;
+                btnTarih.ForeColor = Color.White;
+                btnTarih.BackColor = Color.FromArgb(60, 60, 60);
+                btnTarih.FlatStyle = FlatStyle.Flat;
+                btnTarih.FlatAppearance.BorderColor = Color.Gray;
+                btnTarih.FlatAppearance.BorderSize = 1;
                 btnTarih.Tag = tarih;
-                btnTarih.BackColor = Color.FromArgb(200, 200, 200);
                 btnTarih.Click += BtnTarih_Click;
 
                 if (tarih.Date == bugun.Date)
                 {
                     seciliButon = btnTarih;
                     btnTarih.BackColor = Color.FromArgb(255, 192, 192);
+                    btnTarih.ForeColor = Color.Black;
                     panelBilgi.Controls.Clear();
                     TarihBilgisiGoster(tarih);
                 }
@@ -92,9 +108,13 @@ namespace gorselProgramlamaProje.Forms
             if (sender is Button tiklananButon)
             {
                 if (seciliButon != null)
-                    seciliButon.BackColor = Color.FromArgb(200, 200, 200);
+                {
+                    seciliButon.BackColor = Color.FromArgb(60, 60, 60);
+                    seciliButon.ForeColor = Color.White;
+                }
 
                 tiklananButon.BackColor = Color.FromArgb(255, 192, 192);
+                tiklananButon.ForeColor = Color.Black;
                 seciliButon = tiklananButon;
 
                 DateTime seciliTarih = (DateTime)tiklananButon.Tag;
