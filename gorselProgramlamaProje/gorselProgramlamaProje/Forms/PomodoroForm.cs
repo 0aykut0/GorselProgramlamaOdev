@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Media;
 
 namespace gorselProgramlamaProje.Forms
 {
@@ -23,10 +24,14 @@ namespace gorselProgramlamaProje.Forms
         private readonly int longTime = 45 * 60;
         private readonly int breakDuration = 5 * 60;
 
-        private int workDuration;    // Seçilen süre
-        private int timeLeft;        // Geri sayım süresi
+        private int workDuration;
+        private int timeLeft;
         private bool isRunning = false;
         private bool isOnBreak = false;
+
+        // Müzik için
+        private SoundPlayer? player;
+        private bool isMuted = false;
 
         public PomodoroForm()
         {
@@ -42,35 +47,43 @@ namespace gorselProgramlamaProje.Forms
             rdoMedium.CheckedChanged += RadioButton_CheckedChanged;
             rdoLong.CheckedChanged += RadioButton_CheckedChanged;
 
+            btnMute.Click += btnMute_Click;
+
             timer1.Tick += timer1_Tick;
         }
 
         private void PomodoroForm_Load(object? sender, EventArgs e)
         {
-            // Başlangıç sürelerini ayarla
             isOnBreak = false;
             workDuration = GetSelectedWorkDuration();
             timeLeft = workDuration;
             isRunning = false;
 
-            // Daire görünümlü panel
+            // Timer panel daire
             var path = new GraphicsPath();
             path.AddEllipse(0, 0, pnlTimer.Width, pnlTimer.Height);
             pnlTimer.Region = new Region(path);
 
             UpdateLabel();
+
+            // Müzik başlat
+            try
+            {
+                player = new SoundPlayer(@"C:\\Users\\esmah\\OneDrive\\Desktop\\GorselProgramlamaOdev\\gorselProgramlamaProje\\gorselProgramlamaProje\\assets\\music.wav");
+                player.PlayLooping();
+            }
+            catch
+            {
+                MessageBox.Show("focus.wav dosyası bulunamadı veya açılamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private int GetSelectedWorkDuration()
         {
-            if (rdoShort.Checked)
-                return shortTime;
-            else if (rdoMedium.Checked)
-                return mediumTime;
-            else if (rdoLong.Checked)
-                return longTime;
-            else
-                return mediumTime; // Varsayılan
+            if (rdoShort.Checked) return shortTime;
+            else if (rdoMedium.Checked) return mediumTime;
+            else if (rdoLong.Checked) return longTime;
+            else return mediumTime;
         }
 
         private void UpdateLabel()
@@ -81,7 +94,7 @@ namespace gorselProgramlamaProje.Forms
 
         private void RadioButton_CheckedChanged(object? sender, EventArgs e)
         {
-            if (isRunning) return; // Sayaç çalışıyorsa değiştirme
+            if (isRunning) return;
 
             workDuration = GetSelectedWorkDuration();
             timeLeft = workDuration;
@@ -93,7 +106,6 @@ namespace gorselProgramlamaProje.Forms
             if (!isRunning)
             {
                 workDuration = GetSelectedWorkDuration();
-
                 if (!isOnBreak)
                     timeLeft = workDuration;
 
@@ -147,6 +159,23 @@ namespace gorselProgramlamaProje.Forms
                 isRunning = true;
             }
         }
+
+        private void btnMute_Click(object? sender, EventArgs e)
+        {
+            if (player == null) return;
+
+            if (isMuted)
+            {
+                player.PlayLooping();
+                btnMute.Text = "🔊";
+                isMuted = false;
+            }
+            else
+            {
+                player.Stop();
+                btnMute.Text = "🔇";
+                isMuted = true;
+            }
+        }
     }
 }
-
