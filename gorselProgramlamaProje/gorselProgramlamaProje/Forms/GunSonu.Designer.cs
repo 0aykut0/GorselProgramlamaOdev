@@ -34,7 +34,6 @@
             label2 = new Label();
             panel1 = new Panel();
             button1 = new Button();
-            btnGeri = new Button();
             pnlHeader.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -101,25 +100,12 @@
             button1.Text = "BİTİR";
             button1.UseVisualStyleBackColor = true;
             // 
-            // btnGeri
-            // 
-            btnGeri.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            btnGeri.ForeColor = Color.Pink;
-            btnGeri.Location = new Point(12, 12);
-            btnGeri.Name = "btnGeri";
-            btnGeri.Size = new Size(75, 23);
-            btnGeri.TabIndex = 5;
-            btnGeri.Text = "Geri";
-            btnGeri.UseVisualStyleBackColor = true;
-            btnGeri.Click += btnGeri_Click;
-            // 
             // GunSonu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
             ClientSize = new Size(627, 338);
-            Controls.Add(btnGeri);
             Controls.Add(button1);
             Controls.Add(panel1);
             Controls.Add(pnlHeader);
@@ -141,6 +127,5 @@
         private Label label2;
         private Panel panel1;
         private Button button1;
-        private Button btnGeri;
     }
 }
