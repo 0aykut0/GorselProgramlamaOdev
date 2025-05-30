@@ -9,44 +9,68 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
 namespace gorselProgramlamaProje.Forms
 {
     public partial class PomodoroForm : Form
     {
-        // ─────────────── Yeni eklenen alanlar ───────────────
-        private readonly int workDuration = 1 * 60;  // 20 dk çalışma
-        private readonly int breakDuration = 5 * 60;  // 5  dk mola
-        private bool isOnBreak;                        // Şu anda molada mıyız?
-        // ────────────────────────────────────────────────────
+        // Süreler
+        private readonly int shortTime = 10 * 60;
+        private readonly int mediumTime = 25 * 60;
+        private readonly int longTime = 45 * 60;
+        private readonly int breakDuration = 5 * 60;
 
-        private int timeLeft = 20 * 60;    // Başlangıçta 20 dk
-        private bool isRunning = false;    // Sayaç çalışıyor mu?
+        private int workDuration;    // Seçilen süre
+        private int timeLeft;        // Geri sayım süresi
+        private bool isRunning = false;
+        private bool isOnBreak = false;
 
         public PomodoroForm()
         {
             InitializeComponent();
 
-            // event bağlamaları
             this.Load += PomodoroForm_Load;
+
             btnStart.Click += btnStart_Click;
             btnPause.Click += btnPause_Click;
             btnStop.Click += btnStop_Click;
+
+            rdoShort.CheckedChanged += RadioButton_CheckedChanged;
+            rdoMedium.CheckedChanged += RadioButton_CheckedChanged;
+            rdoLong.CheckedChanged += RadioButton_CheckedChanged;
+
             timer1.Tick += timer1_Tick;
         }
 
         private void PomodoroForm_Load(object? sender, EventArgs e)
         {
-            // ─────────────── Yeni başlangıç atamaları ───────────────
+            // Başlangıç sürelerini ayarla
             isOnBreak = false;
+            workDuration = GetSelectedWorkDuration();
             timeLeft = workDuration;
             isRunning = false;
-            // ─────────────────────────────────────────────────────────
 
-            // pnlTimer’ı daireye çevirme ve ilk etiketi güncelleme
+            // Daire görünümlü panel
             var path = new GraphicsPath();
             path.AddEllipse(0, 0, pnlTimer.Width, pnlTimer.Height);
             pnlTimer.Region = new Region(path);
+
             UpdateLabel();
+        }
+
+        private int GetSelectedWorkDuration()
+        {
+            if (rdoShort.Checked)
+                return shortTime;
+            else if (rdoMedium.Checked)
+                return mediumTime;
+            else if (rdoLong.Checked)
+                return longTime;
+            else
+                return mediumTime; // Varsayılan
         }
 
         private void UpdateLabel()
@@ -55,10 +79,24 @@ namespace gorselProgramlamaProje.Forms
             lblTime.Text = ts.ToString(@"mm\:ss");
         }
 
+        private void RadioButton_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (isRunning) return; // Sayaç çalışıyorsa değiştirme
+
+            workDuration = GetSelectedWorkDuration();
+            timeLeft = workDuration;
+            UpdateLabel();
+        }
+
         private void btnStart_Click(object? sender, EventArgs e)
         {
             if (!isRunning)
             {
+                workDuration = GetSelectedWorkDuration();
+
+                if (!isOnBreak)
+                    timeLeft = workDuration;
+
                 timer1.Start();
                 isRunning = true;
             }
@@ -77,11 +115,10 @@ namespace gorselProgramlamaProje.Forms
         {
             timer1.Stop();
             isRunning = false;
-
-            // ─────────────── Reset her zaman çalışma moduna ───────────────
             isOnBreak = false;
+
+            workDuration = GetSelectedWorkDuration();
             timeLeft = workDuration;
-            // ────────────────────────────────────────────────────────────────
 
             UpdateLabel();
         }
@@ -95,19 +132,16 @@ namespace gorselProgramlamaProje.Forms
             }
             else
             {
-                // Süre doldu, mod değiştir
                 isOnBreak = !isOnBreak;
-                timeLeft = isOnBreak ? breakDuration : workDuration;
+                timeLeft = isOnBreak ? breakDuration : GetSelectedWorkDuration();
 
-                // Kullanıcıya bilgi ver (isteğe bağlı)
-                if (isOnBreak)
-                    MessageBox.Show("Çalışma süresi doldu! Mola başlıyor.",
-                                    "Pomodoro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else
-                    MessageBox.Show("Mola bitti! Çalışma zamanı.",
-                                    "Pomodoro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    isOnBreak ? "Çalışma süresi doldu! Mola başlıyor." : "Mola bitti! Çalışma zamanı.",
+                    "Pomodoro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
 
-                // Sayaç devam etsin
                 UpdateLabel();
                 timer1.Start();
                 isRunning = true;
@@ -115,3 +149,4 @@ namespace gorselProgramlamaProje.Forms
         }
     }
 }
+

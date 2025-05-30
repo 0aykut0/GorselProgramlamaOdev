@@ -35,6 +35,9 @@
             btnPause = new Button();
             btnStop = new Button();
             timer1 = new System.Windows.Forms.Timer(components);
+            rdoShort = new RadioButton();
+            rdoMedium = new RadioButton();
+            rdoLong = new RadioButton();
             pnlTimer.SuspendLayout();
             SuspendLayout();
             // 
@@ -68,7 +71,7 @@
             btnStart.FlatAppearance.MouseDownBackColor = Color.Pink;
             btnStart.FlatAppearance.MouseOverBackColor = Color.Pink;
             btnStart.FlatStyle = FlatStyle.Flat;
-            btnStart.Location = new Point(230, 260);
+            btnStart.Location = new Point(231, 297);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(100, 40);
             btnStart.TabIndex = 1;
@@ -84,7 +87,7 @@
             btnPause.FlatAppearance.MouseDownBackColor = Color.Pink;
             btnPause.FlatAppearance.MouseOverBackColor = Color.Pink;
             btnPause.FlatStyle = FlatStyle.Flat;
-            btnPause.Location = new Point(350, 260);
+            btnPause.Location = new Point(351, 297);
             btnPause.Name = "btnPause";
             btnPause.Size = new Size(100, 40);
             btnPause.TabIndex = 2;
@@ -100,7 +103,7 @@
             btnStop.FlatAppearance.MouseDownBackColor = Color.Pink;
             btnStop.FlatAppearance.MouseOverBackColor = Color.Pink;
             btnStop.FlatStyle = FlatStyle.Flat;
-            btnStop.Location = new Point(470, 260);
+            btnStop.Location = new Point(471, 297);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(100, 40);
             btnStop.TabIndex = 3;
@@ -111,12 +114,51 @@
             // 
             timer1.Interval = 1000;
             // 
+            // rdoShort
+            // 
+            rdoShort.AutoSize = true;
+            rdoShort.BackColor = SystemColors.ButtonHighlight;
+            rdoShort.Location = new Point(581, 59);
+            rdoShort.Name = "rdoShort";
+            rdoShort.Size = new Size(111, 24);
+            rdoShort.TabIndex = 4;
+            rdoShort.TabStop = true;
+            rdoShort.Text = "KISA (10 dk)";
+            rdoShort.UseVisualStyleBackColor = false;
+            // 
+            // rdoMedium
+            // 
+            rdoMedium.AutoSize = true;
+            rdoMedium.BackColor = SystemColors.HighlightText;
+            rdoMedium.Location = new Point(581, 126);
+            rdoMedium.Name = "rdoMedium";
+            rdoMedium.Size = new Size(120, 24);
+            rdoMedium.TabIndex = 5;
+            rdoMedium.TabStop = true;
+            rdoMedium.Text = "İDEAL (25 dk)";
+            rdoMedium.UseVisualStyleBackColor = false;
+            // 
+            // rdoLong
+            // 
+            rdoLong.AutoSize = true;
+            rdoLong.BackColor = SystemColors.HighlightText;
+            rdoLong.Location = new Point(581, 194);
+            rdoLong.Name = "rdoLong";
+            rdoLong.Size = new Size(129, 24);
+            rdoLong.TabIndex = 6;
+            rdoLong.TabStop = true;
+            rdoLong.Text = "YOĞUN (45 dk)";
+            rdoLong.UseVisualStyleBackColor = false;
+            // 
             // PomodoroForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.MenuText;
             ClientSize = new Size(793, 455);
+            Controls.Add(rdoLong);
+            Controls.Add(rdoMedium);
+            Controls.Add(rdoShort);
             Controls.Add(btnStop);
             Controls.Add(btnPause);
             Controls.Add(btnStart);
@@ -130,6 +172,7 @@
             Load += PomodoroForm_Load;
             pnlTimer.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -140,5 +183,8 @@
         private Button btnPause;
         private Button btnStop;
         private System.Windows.Forms.Timer timer1;
+        private RadioButton rdoShort;
+        private RadioButton rdoMedium;
+        private RadioButton rdoLong;
     }
 }
