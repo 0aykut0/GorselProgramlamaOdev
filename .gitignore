@@ -408,3 +408,4 @@ Migrations/
 # UygulamaDbContext (isteğe bağlı ignore)
 **/UygulamaDbContext.cs
 
+gorselProgramlamaProje/gorselProgramlamaProje/assets/music.wav
