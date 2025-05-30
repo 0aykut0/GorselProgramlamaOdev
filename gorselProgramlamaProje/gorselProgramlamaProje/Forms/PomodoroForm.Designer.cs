@@ -140,5 +140,6 @@
         private Button btnPause;
         private Button btnStop;
         private System.Windows.Forms.Timer timer1;
+        private Button btnAyarlar;
     }
 }
