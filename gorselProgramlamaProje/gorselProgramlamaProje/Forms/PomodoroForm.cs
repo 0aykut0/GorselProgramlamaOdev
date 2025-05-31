@@ -10,7 +10,7 @@ namespace gorselProgramlamaProje.Forms
 {
     public partial class PomodoroForm : Form
     {
-        private readonly int shortTime = 10 * 60;
+        private readonly int shortTime = 1 * 10;
         private readonly int mediumTime = 25 * 60;
         private readonly int longTime = 45 * 60;
         private readonly int breakDuration = 5 * 60;
