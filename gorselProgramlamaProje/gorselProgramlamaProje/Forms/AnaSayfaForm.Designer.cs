@@ -20,120 +20,145 @@ namespace gorselProgramlamaProje.Forms
         private void InitializeComponent()
         {
             panelMenu = new Panel();
-            btnAyarlar = new Button();
             btnPerformans = new Button();
-            btnTakvim = new Button();
             btnsSilinenler = new Button();
             btnPomodoro = new Button();
-            btnAnaSayfa = new Button();
             button1 = new Button();
             btnMenu = new Button();
             monthCalendar1 = new MonthCalendar();
             flpTarihler = new FlowLayoutPanel();
             flpGorevler = new FlowLayoutPanel();
             btnGunuBitir = new Button();
-
+            panelMenu.SuspendLayout();
             SuspendLayout();
-
+            // 
             // panelMenu
+            // 
             panelMenu.BackColor = Color.FromArgb(64, 64, 64);
-            panelMenu.Controls.Add(btnAyarlar);
             panelMenu.Controls.Add(btnPerformans);
-            panelMenu.Controls.Add(btnTakvim);
             panelMenu.Controls.Add(btnsSilinenler);
             panelMenu.Controls.Add(btnPomodoro);
-            panelMenu.Controls.Add(btnAnaSayfa);
             panelMenu.Controls.Add(button1);
-            panelMenu.Location = new Point(0, 49);
+            panelMenu.Location = new Point(0, 37);
+            panelMenu.Margin = new Padding(2);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(262, 428);
-            panelMenu.Visible = true;
-
-            // button1 = Hesaptan Çık
-            button1.BackColor = Color.FromArgb(255, 192, 192);
-            button1.Text = "Hesaptan Çık";
-            button1.Size = new Size(160, 29);
-            button1.Location = new Point(47, 379);
-
-            // btnAyarlar
-            btnAyarlar.BackColor = Color.FromArgb(255, 192, 192);
-            btnAyarlar.Text = "AYARLAR";
-            btnAyarlar.Size = new Size(106, 58);
-            btnAyarlar.Location = new Point(68, 273);
-            btnAyarlar.Click += btnAyarlar_Click;
-
+            panelMenu.Size = new Size(204, 321);
+            panelMenu.TabIndex = 5;
+            // 
             // btnPerformans
+            // 
             btnPerformans.BackColor = Color.FromArgb(255, 192, 192);
+            btnPerformans.Location = new Point(53, 145);
+            btnPerformans.Margin = new Padding(2);
+            btnPerformans.Name = "btnPerformans";
+            btnPerformans.Size = new Size(82, 22);
+            btnPerformans.TabIndex = 1;
             btnPerformans.Text = "Performans";
-            btnPerformans.Size = new Size(106, 29);
-            btnPerformans.Location = new Point(68, 229);
+            btnPerformans.UseVisualStyleBackColor = false;
             btnPerformans.Click += btnPerformans_Click;
-
-            // btnTakvim
-            btnTakvim.BackColor = Color.FromArgb(255, 192, 192);
-            btnTakvim.Text = "Takvim";
-            btnTakvim.Size = new Size(106, 29);
-            btnTakvim.Location = new Point(68, 194);
-
+            // 
             // btnsSilinenler
+            // 
             btnsSilinenler.BackColor = Color.FromArgb(255, 192, 192);
+            btnsSilinenler.Location = new Point(53, 119);
+            btnsSilinenler.Margin = new Padding(2);
+            btnsSilinenler.Name = "btnsSilinenler";
+            btnsSilinenler.Size = new Size(82, 22);
+            btnsSilinenler.TabIndex = 3;
             btnsSilinenler.Text = "Silinenler";
-            btnsSilinenler.Size = new Size(106, 29);
-            btnsSilinenler.Location = new Point(68, 159);
-
+            btnsSilinenler.UseVisualStyleBackColor = false;
+            btnsSilinenler.Click += btnsSilinenler_Click;
+            // 
             // btnPomodoro
+            // 
             btnPomodoro.BackColor = Color.FromArgb(255, 192, 192);
+            btnPomodoro.Location = new Point(53, 92);
+            btnPomodoro.Margin = new Padding(2);
+            btnPomodoro.Name = "btnPomodoro";
+            btnPomodoro.Size = new Size(82, 22);
+            btnPomodoro.TabIndex = 4;
             btnPomodoro.Text = "Pomodoro";
-            btnPomodoro.Size = new Size(106, 29);
-            btnPomodoro.Location = new Point(68, 123);
-
-            // btnAnaSayfa
-            btnAnaSayfa.BackColor = Color.Pink;
-            btnAnaSayfa.Text = "Ana Sayfa";
-            btnAnaSayfa.Size = new Size(106, 29);
-            btnAnaSayfa.Location = new Point(68, 88);
-            btnAnaSayfa.Click += btnAnaSayfa_Click;
-
+            btnPomodoro.UseVisualStyleBackColor = false;
+            btnPomodoro.Click += btnPomodoro_Click;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(255, 192, 192);
+            button1.Location = new Point(37, 284);
+            button1.Margin = new Padding(2);
+            button1.Name = "button1";
+            button1.Size = new Size(124, 22);
+            button1.TabIndex = 6;
+            button1.Text = "Hesaptan Çık";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
             // btnMenu
+            // 
             btnMenu.BackColor = Color.FromArgb(255, 192, 192);
+            btnMenu.Location = new Point(9, 9);
+            btnMenu.Margin = new Padding(2);
+            btnMenu.Name = "btnMenu";
+            btnMenu.Size = new Size(35, 23);
+            btnMenu.TabIndex = 4;
             btnMenu.Text = "=";
-            btnMenu.Size = new Size(45, 31);
-            btnMenu.Location = new Point(12, 12);
+            btnMenu.UseVisualStyleBackColor = false;
             btnMenu.Click += btnMenu_Click;
-
+            // 
             // monthCalendar1
-            monthCalendar1.Location = new Point(0, 536);
-
+            // 
+            monthCalendar1.Location = new Point(0, 402);
+            monthCalendar1.Margin = new Padding(7);
+            monthCalendar1.Name = "monthCalendar1";
+            monthCalendar1.TabIndex = 3;
+            // 
             // flpTarihler
-            flpTarihler.Location = new Point(291, 49);
-            flpTarihler.Size = new Size(1000, 85);
+            // 
+            flpTarihler.Location = new Point(226, 37);
+            flpTarihler.Margin = new Padding(2);
+            flpTarihler.Name = "flpTarihler";
+            flpTarihler.Size = new Size(778, 64);
+            flpTarihler.TabIndex = 2;
             flpTarihler.WrapContents = false;
-
+            // 
             // flpGorevler
+            // 
             flpGorevler.AutoScroll = true;
-            flpGorevler.Location = new Point(291, 150);
-            flpGorevler.Size = new Size(900, 300);
-
+            flpGorevler.Location = new Point(226, 112);
+            flpGorevler.Margin = new Padding(2);
+            flpGorevler.Name = "flpGorevler";
+            flpGorevler.Size = new Size(700, 225);
+            flpGorevler.TabIndex = 1;
+            // 
             // btnGunuBitir
+            // 
             btnGunuBitir.BackColor = Color.FromArgb(255, 192, 192);
-            btnGunuBitir.Location = new Point(896, 692);
-            btnGunuBitir.Size = new Size(161, 51);
+            btnGunuBitir.Location = new Point(697, 519);
+            btnGunuBitir.Margin = new Padding(2);
+            btnGunuBitir.Name = "btnGunuBitir";
+            btnGunuBitir.Size = new Size(125, 38);
+            btnGunuBitir.TabIndex = 0;
             btnGunuBitir.Text = "Günü Bitir";
-
+            btnGunuBitir.UseVisualStyleBackColor = false;
+            btnGunuBitir.Click += btnGunuBitir_Click;
+            // 
             // AnaSayfaForm
-            AutoScaleDimensions = new SizeF(9F, 20F);
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(1300, 800);
+            ClientSize = new Size(1011, 600);
             Controls.Add(btnGunuBitir);
             Controls.Add(flpGorevler);
             Controls.Add(flpTarihler);
             Controls.Add(monthCalendar1);
             Controls.Add(btnMenu);
             Controls.Add(panelMenu);
+            Margin = new Padding(2);
             Name = "AnaSayfaForm";
             Text = "AnaSayfaForm";
             Load += AnaSayfaForm_Load;
+            panelMenu.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -143,10 +168,7 @@ namespace gorselProgramlamaProje.Forms
         private Button btnMenu;
         private Button btnsSilinenler;
         private Button btnPomodoro;
-        private Button btnAnaSayfa;
-        private Button btnAyarlar;
         private Button btnPerformans;
-        private Button btnTakvim;
         private Button button1;
         private MonthCalendar monthCalendar1;
         private FlowLayoutPanel flpTarihler;
