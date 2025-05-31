@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 using System.Media;
+using System.Windows.Forms;
 using gorselProgramlamaProje.Managers;
 using gorselProgramlamaProje.Models;
 
@@ -10,7 +10,7 @@ namespace gorselProgramlamaProje.Forms
 {
     public partial class PomodoroForm : Form
     {
-        private readonly int shortTime = 1 * 60;
+        private readonly int shortTime = 10 * 60;
         private readonly int mediumTime = 25 * 60;
         private readonly int longTime = 45 * 60;
         private readonly int breakDuration = 5 * 60;
@@ -20,45 +20,30 @@ namespace gorselProgramlamaProje.Forms
         private bool isRunning = false;
         private bool isOnBreak = false;
 
-        private DateTime currentDate;    // O günün tarihi
-        private int currentUserId;       // O anki kullanıcı
+        private DateTime currentDate;
+        private int currentUserId;
+        private Form anaSayfaForm;
 
-        private Form anaSayfaForm; // REFERANS
-
-        // Müzik için
         private SoundPlayer? player;
-        private bool isMuted = false;
+        private bool isMuted = true;
+
         public PomodoroForm(Form geriDonulecekForm)
         {
             InitializeComponent();
             anaSayfaForm = geriDonulecekForm;
 
-            // “O anki kullanıcı” ve “tarih” bilgilerini alalım
             currentUserId = SessionManager.CurrentUserId;
             currentDate = DateTime.Today;
 
             this.Load += PomodoroForm_Load;
-
             btnStart.Click += btnStart_Click;
             btnPause.Click += btnPause_Click;
             btnStop.Click += btnStop_Click;
-
             rdoShort.CheckedChanged += RadioButton_CheckedChanged;
             rdoMedium.CheckedChanged += RadioButton_CheckedChanged;
             rdoLong.CheckedChanged += RadioButton_CheckedChanged;
-
             timer1.Tick += timer1_Tick;
-            // Müzik başlat
-            try
-            {
-                player = new SoundPlayer(@"C:\\Users\\esmah\\OneDrive\\Desktop\\GorselProgramlamaOdev\\gorselProgramlamaProje\\gorselProgramlamaProje\\assets\\music.wav");
-                player = new SoundPlayer(@"C:\Users\mayku\Desktop\pomodoro\GorselProgramlamaOdev\gorselProgramlamaProje\gorselProgramlamaProje\assets\music.wav");
-                player.PlayLooping();
-            }
-            catch
-            {
-                MessageBox.Show("focus.wav dosyası bulunamadı veya açılamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            btnMusic.Click += btnMusic_Click;
         }
 
         private void PomodoroForm_Load(object? sender, EventArgs e)
@@ -72,19 +57,16 @@ namespace gorselProgramlamaProje.Forms
             path.AddEllipse(0, 0, pnlTimer.Width, pnlTimer.Height);
             pnlTimer.Region = new Region(path);
 
+            btnMusic.Text = "🔇"; // Sessiz ikon
             UpdateLabel();
         }
 
         private int GetSelectedWorkDuration()
         {
-            if (rdoShort.Checked)
-                return shortTime;
-            else if (rdoMedium.Checked)
-                return mediumTime;
-            else if (rdoLong.Checked)
-                return longTime;
-            else
-                return mediumTime;
+            if (rdoShort.Checked) return shortTime;
+            else if (rdoMedium.Checked) return mediumTime;
+            else if (rdoLong.Checked) return longTime;
+            else return mediumTime;
         }
 
         private void UpdateLabel()
@@ -96,7 +78,6 @@ namespace gorselProgramlamaProje.Forms
         private void RadioButton_CheckedChanged(object? sender, EventArgs e)
         {
             if (isRunning) return;
-
             workDuration = GetSelectedWorkDuration();
             timeLeft = workDuration;
             UpdateLabel();
@@ -107,9 +88,7 @@ namespace gorselProgramlamaProje.Forms
             if (!isRunning)
             {
                 workDuration = GetSelectedWorkDuration();
-                if (!isOnBreak)
-                    timeLeft = workDuration;
-
+                if (!isOnBreak) timeLeft = workDuration;
                 timer1.Start();
                 isRunning = true;
             }
@@ -129,10 +108,8 @@ namespace gorselProgramlamaProje.Forms
             timer1.Stop();
             isRunning = false;
             isOnBreak = false;
-
             workDuration = GetSelectedWorkDuration();
             timeLeft = workDuration;
-
             UpdateLabel();
         }
 
@@ -145,32 +122,19 @@ namespace gorselProgramlamaProje.Forms
             }
             else
             {
-                // (A) Önceki durum kaydediliyor
                 bool wasOnBreak = isOnBreak;
-
-                // (B) Şimdi isOnBreak toggle ediliyor
                 isOnBreak = !isOnBreak;
 
-                // (C) Eğer önceki durumda “mola” değilse (yani work session bitti), ekleme yap
                 if (!wasOnBreak && isOnBreak)
                 {
-                    // workDuration saniye cinsindeyse, dakikaya çevirelim:
                     int eklenecekDakika = workDuration / 60;
-
-                    // Şimdi ilgili tarihe ve kullanıcıya göre DB’ye ekleme yap:
-                    GunlukOzetManager.AddPomodoroDakikaByDate(
-                        kullaniciId: currentUserId,
-                        tarih: currentDate,
-                        eklenecekDakika: eklenecekDakika
-                    );
+                    GunlukOzetManager.AddPomodoroDakikaByDate(currentUserId, currentDate, eklenecekDakika);
                 }
 
-                // (D) Zamanlayıcıyı mola / yeniden work session olarak ayarlama
                 timeLeft = isOnBreak ? breakDuration : GetSelectedWorkDuration();
 
                 MessageBox.Show(
-                    isOnBreak ? "Çalışma süresi doldu! Mola başlıyor."
-                              : "Mola bitti! Çalışma zamanı.",
+                    isOnBreak ? "Çalışma süreci bitti! Mola başlıyor." : "Mola bitti! Çalışma başlıyor.",
                     "Pomodoro",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
@@ -182,11 +146,38 @@ namespace gorselProgramlamaProje.Forms
             }
         }
 
-        // “Geri” butonuna tıklanınca
+        private void btnMusic_Click(object sender, EventArgs e)
+        {
+            string path = @"C:\\Users\\esmah\\OneDrive\\Desktop\\GorselProgramlamaOdev\\gorselProgramlamaProje\\gorselProgramlamaProje\\assets\\focus.wav";
+
+            if (player == null)
+                player = new SoundPlayer(path);
+
+            if (isMuted)
+            {
+                try
+                {
+                    player.PlayLooping();
+                    isMuted = false;
+                    btnMusic.Text = "🎵";
+                }
+                catch
+                {
+                    MessageBox.Show("focus.wav dosyası bulunamadı!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                player.Stop();
+                isMuted = true;
+                btnMusic.Text = "🔇";
+            }
+        }
+
         private void button1_Click_1(object sender, EventArgs e)
         {
-            anaSayfaForm.Show(); // AnaSayfaForm tekrar gösterilir
-            this.Close();        // PomodoroForm kapanır
+            anaSayfaForm.Show();
+            this.Close();
         }
     }
 }
