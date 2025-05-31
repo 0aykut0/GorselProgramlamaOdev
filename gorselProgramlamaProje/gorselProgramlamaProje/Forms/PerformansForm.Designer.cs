@@ -35,26 +35,27 @@
             // 
             button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
             button1.ForeColor = Color.Pink;
-            button1.Location = new Point(12, 12);
+            button1.Location = new Point(14, 16);
+            button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(86, 31);
             button1.TabIndex = 0;
             button1.Text = "Geri";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            button1.Click += button1_Click_1;
             // 
             // PerformansForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 338);
+            ClientSize = new Size(800, 451);
             Controls.Add(button1);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "PerformansForm";
             Text = "PerformansForm";
             Load += PerformansForm_Load;
             ResumeLayout(false);
         }
+
         private void PerformansForm_Load(object sender, EventArgs e)
         {
             // Designer çağırıyor ama biz elle oluşturduk, içerik gerekmez
