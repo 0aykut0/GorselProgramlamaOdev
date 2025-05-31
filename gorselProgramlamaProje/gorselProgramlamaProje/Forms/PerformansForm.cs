@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using gorselProgramlamaProje.Managers;
+using gorselProgramlamaProje.Forms;
 
 namespace gorselProgramlamaProje.Forms
 {
@@ -13,6 +15,7 @@ namespace gorselProgramlamaProje.Forms
         private TextBox txtNot;
         private Button btnNotEkle;
         private Button seciliButon;
+        private Form anaSayfaForm; // AnaSayfa referansı
 
         private Dictionary<DateTime, (int saat, int puan, string not)> gunlukVeriler = new()
         {

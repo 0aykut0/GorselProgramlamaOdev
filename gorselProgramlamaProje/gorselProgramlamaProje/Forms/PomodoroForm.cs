@@ -2,7 +2,8 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using gorselProgramlamaProje.Managers; // <-- Burada GunlukOzetManager bulunmalı
+using System.Media;
+using gorselProgramlamaProje.Managers;
 using gorselProgramlamaProje.Models;
 
 namespace gorselProgramlamaProje.Forms
@@ -24,6 +25,9 @@ namespace gorselProgramlamaProje.Forms
 
         private Form anaSayfaForm; // REFERANS
 
+        // Müzik için
+        private SoundPlayer? player;
+        private bool isMuted = false;
         public PomodoroForm(Form geriDonulecekForm)
         {
             InitializeComponent();
@@ -44,6 +48,17 @@ namespace gorselProgramlamaProje.Forms
             rdoLong.CheckedChanged += RadioButton_CheckedChanged;
 
             timer1.Tick += timer1_Tick;
+            // Müzik başlat
+            try
+            {
+                player = new SoundPlayer(@"C:\\Users\\esmah\\OneDrive\\Desktop\\GorselProgramlamaOdev\\gorselProgramlamaProje\\gorselProgramlamaProje\\assets\\music.wav");
+                player = new SoundPlayer(@"C:\Users\mayku\Desktop\pomodoro\GorselProgramlamaOdev\gorselProgramlamaProje\gorselProgramlamaProje\assets\music.wav");
+                player.PlayLooping();
+            }
+            catch
+            {
+                MessageBox.Show("focus.wav dosyası bulunamadı veya açılamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void PomodoroForm_Load(object? sender, EventArgs e)
