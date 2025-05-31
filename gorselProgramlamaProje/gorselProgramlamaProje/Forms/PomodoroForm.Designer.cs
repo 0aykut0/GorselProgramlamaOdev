@@ -40,6 +40,7 @@
             rdoLong = new RadioButton();
             btnMute = new Button();
             button1 = new Button();
+            btnMusic = new Button();
             pnlTimer.SuspendLayout();
             SuspendLayout();
             // 
@@ -120,7 +121,7 @@
             // 
             rdoShort.AutoSize = true;
             rdoShort.BackColor = SystemColors.ButtonHighlight;
-            rdoShort.Location = new Point(581, 59);
+            rdoShort.Location = new Point(577, 72);
             rdoShort.Name = "rdoShort";
             rdoShort.Size = new Size(111, 24);
             rdoShort.TabIndex = 4;
@@ -132,7 +133,7 @@
             // 
             rdoMedium.AutoSize = true;
             rdoMedium.BackColor = SystemColors.HighlightText;
-            rdoMedium.Location = new Point(581, 125);
+            rdoMedium.Location = new Point(577, 138);
             rdoMedium.Name = "rdoMedium";
             rdoMedium.Size = new Size(120, 24);
             rdoMedium.TabIndex = 5;
@@ -144,7 +145,7 @@
             // 
             rdoLong.AutoSize = true;
             rdoLong.BackColor = SystemColors.HighlightText;
-            rdoLong.Location = new Point(581, 195);
+            rdoLong.Location = new Point(577, 208);
             rdoLong.Name = "rdoLong";
             rdoLong.Size = new Size(129, 24);
             rdoLong.TabIndex = 6;
@@ -175,12 +176,23 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click_1;
             // 
+            // btnMusic
+            // 
+            btnMusic.BackColor = Color.Pink;
+            btnMusic.Location = new Point(719, 12);
+            btnMusic.Name = "btnMusic";
+            btnMusic.Size = new Size(44, 27);
+            btnMusic.TabIndex = 8;
+            btnMusic.Text = "🎵";
+            btnMusic.UseVisualStyleBackColor = false;
+            // 
             // PomodoroForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.MenuText;
             ClientSize = new Size(793, 455);
+            Controls.Add(btnMusic);
             Controls.Add(btnMute);
             Controls.Add(button1);
             Controls.Add(rdoLong);
@@ -215,5 +227,6 @@
         private RadioButton rdoLong;
         private Button btnMute;
         private Button button1;
+        private Button btnMusic;
     }
 }
