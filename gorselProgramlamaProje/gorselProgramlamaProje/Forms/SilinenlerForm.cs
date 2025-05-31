@@ -1,24 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 using gorselProgramlamaProje.Managers;
+
+
+using gorselProgramlamaProje.Models;
 
 namespace gorselProgramlamaProje.Forms
 {
     public partial class SilinenlerForm : Form
     {
         private bool tiklamaKilitli = false;
-        private Form anaSayfaForm; // REFERANS
+        private AnaSayfaForm anaSayfa; // referans
 
-        public SilinenlerForm(Form geriDonulecekForm)
+        public SilinenlerForm(AnaSayfaForm anaSayfaForm)
         {
             InitializeComponent();
-            anaSayfaForm = geriDonulecekForm;
-
             this.Load += SilinenlerForm_Load;
             dgvDeleted.CellContentClick += dgvDeleted_CellContentClick;
+            anaSayfa = anaSayfaForm;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            anaSayfa.GorevleriYenidenYukle();
+            this.Close();
         }
 
         private void SilinenlerForm_Load(object? sender, EventArgs e)
@@ -48,6 +64,13 @@ namespace gorselProgramlamaProje.Forms
             dgvDeleted.GridColor = Color.Black;
             dgvDeleted.DefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#add8e6");
             dgvDeleted.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "colId",
+                HeaderText = "Id",
+                Visible = false
+            });
 
             dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -106,9 +129,13 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            dgvDeleted.Rows.Add("Test Görev 1", DateTime.Now.AddDays(-1));
-            dgvDeleted.Rows.Add("Test Görev 2", DateTime.Now.AddHours(-3));
-            dgvDeleted.Rows.Add("Test Görev 3", DateTime.Now.AddDays(-2));
+            int userId = SessionManager.CurrentUserId;
+            var silinenler = SilinenGorevManager.SilinenGorevleriGetir(userId);
+
+            foreach (var gorev in silinenler)
+            {
+                dgvDeleted.Rows.Add(gorev.Id, gorev.Baslik, gorev.OlusturmaTarihi);
+            }
         }
 
         private async void dgvDeleted_CellContentClick(object? sender, DataGridViewCellEventArgs e)
@@ -118,10 +145,12 @@ namespace gorselProgramlamaProje.Forms
             tiklamaKilitli = true;
 
             string columnName = dgvDeleted.Columns[e.ColumnIndex].Name;
+            int gorevId = Convert.ToInt32(dgvDeleted.Rows[e.RowIndex].Cells["colId"].Value);
             string task = dgvDeleted.Rows[e.RowIndex].Cells["colTask"].Value?.ToString() ?? "";
 
             if (columnName == "colRestore")
             {
+                SilinenGorevManager.GoreviGeriAl(gorevId);
                 MessageBox.Show($"“{task}” geri yüklendi!", "Geri Yükle",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 dgvDeleted.Rows.RemoveAt(e.RowIndex);
@@ -132,18 +161,13 @@ namespace gorselProgramlamaProje.Forms
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
+                    SilinenGorevManager.GoreviKaliciSil(gorevId);
                     dgvDeleted.Rows.RemoveAt(e.RowIndex);
                 }
             }
 
             await Task.Delay(150);
             tiklamaKilitli = false;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            anaSayfaForm.Show(); // Gizlenmiş olan AnaSayfa'yı geri getir
-            this.Close();        // SilinenlerForm'u kapat
         }
     }
 }
