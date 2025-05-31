@@ -32,7 +32,7 @@ namespace gorselProgramlamaProje.Forms
             string sifre = txtParola.Text.Trim();
             string sifreTekrar = txtParola2.Text.Trim();
 
-            if (string.IsNullOrEmpty(kullaniciAdi)||
+            if (string.IsNullOrEmpty(kullaniciAdi) ||
                 string.IsNullOrEmpty(sifre) || string.IsNullOrEmpty(sifreTekrar))
             {
                 MessageBox.Show("Lütfen tüm alanları doldurun.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -66,11 +66,12 @@ namespace gorselProgramlamaProje.Forms
 
         private void btnIptal_Click(object sender, EventArgs e)
         {
-            // İptal edildiğinde formu kapatır ve login ekranına döner
-            this.Close();
-            var loginForm = new LoginForm();
-            loginForm.ShowDialog();
+            this.Hide(); // Önce KayıtForm’u gizle
 
+            LoginForm loginForm = new LoginForm();
+            loginForm.ShowDialog(); // Login ekranını modal olarak aç
+
+            this.Close(); // Login kapandıktan sonra KayıtForm’u tamamen kapat
         }
 
         private void txtKullaniciAd_TextChanged(object sender, EventArgs e)

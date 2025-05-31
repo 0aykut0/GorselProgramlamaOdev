@@ -1,27 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Media;
-using gorselProgramlamaProje.Managers;
-
 
 namespace gorselProgramlamaProje.Forms
 {
     public partial class PomodoroForm : Form
     {
-        // Süreler
-        private readonly int shortTime = 1 * 60;
+        private readonly int shortTime = 10 * 60;
         private readonly int mediumTime = 25 * 60;
         private readonly int longTime = 45 * 60;
         private readonly int breakDuration = 5 * 60;
@@ -31,13 +17,13 @@ namespace gorselProgramlamaProje.Forms
         private bool isRunning = false;
         private bool isOnBreak = false;
 
-        // Müzik için
-        private SoundPlayer? player;
-        private bool isMuted = false;
+        private Form anaSayfaForm; // REFERANS
 
-        public PomodoroForm()
+        // Referanslı constructor
+        public PomodoroForm(Form geriDonulecekForm)
         {
             InitializeComponent();
+            anaSayfaForm = geriDonulecekForm;
 
             this.Load += PomodoroForm_Load;
 
@@ -49,8 +35,6 @@ namespace gorselProgramlamaProje.Forms
             rdoMedium.CheckedChanged += RadioButton_CheckedChanged;
             rdoLong.CheckedChanged += RadioButton_CheckedChanged;
 
-            btnMute.Click += btnMute_Click;
-
             timer1.Tick += timer1_Tick;
         }
 
@@ -61,31 +45,23 @@ namespace gorselProgramlamaProje.Forms
             timeLeft = workDuration;
             isRunning = false;
 
-            // Timer panel daire
             var path = new GraphicsPath();
             path.AddEllipse(0, 0, pnlTimer.Width, pnlTimer.Height);
             pnlTimer.Region = new Region(path);
 
             UpdateLabel();
-
-            // Müzik başlat
-            try
-            {
-                player = new SoundPlayer(@"C:\Users\mayku\Desktop\pomodoro\GorselProgramlamaOdev\gorselProgramlamaProje\gorselProgramlamaProje\assets\music.wav");
-                player.PlayLooping();
-            }
-            catch
-            {
-                MessageBox.Show("focus.wav dosyası bulunamadı veya açılamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private int GetSelectedWorkDuration()
         {
-            if (rdoShort.Checked) return shortTime;
-            else if (rdoMedium.Checked) return mediumTime;
-            else if (rdoLong.Checked) return longTime;
-            else return mediumTime;
+            if (rdoShort.Checked)
+                return shortTime;
+            else if (rdoMedium.Checked)
+                return mediumTime;
+            else if (rdoLong.Checked)
+                return longTime;
+            else
+                return mediumTime;
         }
 
         private void UpdateLabel()
@@ -146,7 +122,6 @@ namespace gorselProgramlamaProje.Forms
             }
             else
             {
-                HandleIntervalCompletion();
                 isOnBreak = !isOnBreak;
                 timeLeft = isOnBreak ? breakDuration : GetSelectedWorkDuration();
 
@@ -163,40 +138,11 @@ namespace gorselProgramlamaProje.Forms
             }
         }
 
-        private void btnMute_Click(object? sender, EventArgs e)
+        // Geri butonuna tıklanınca çalışacak
+        private void button1_Click_1(object sender, EventArgs e)
         {
-            if (player == null) return;
-
-            if (isMuted)
-            {
-                player.PlayLooping();
-                btnMute.Text = "🔊";
-                isMuted = false;
-            }
-            else
-            {
-                player.Stop();
-                btnMute.Text = "🔇";
-                isMuted = true;
-            }
+            anaSayfaForm.Show(); // AnaSayfaForm tekrar gösterilir
+            this.Close();        // PomodoroForm kapanır
         }
-        /// <summary>
-        /// Çalışma turu bittiğinde DB’ye dakika ekler,
-        /// mola turunda hiçbir şey yapmaz.
-        /// </summary>
-        private void HandleIntervalCompletion()
-        {
-            // isOnBreak == false demek, az önce bir çalışma turu bitti
-            if (!isOnBreak)
-            {
-                // workDuration saniye cinsinden, dakikaya çevir:
-                int completedMinutes = workDuration / 60;
-                GunlukOzetManager.AddPomodoroDakika(
-                    completedMinutes,
-                    SessionManager.CurrentUserId
-                );
-            }
-        }
-
     }
 }

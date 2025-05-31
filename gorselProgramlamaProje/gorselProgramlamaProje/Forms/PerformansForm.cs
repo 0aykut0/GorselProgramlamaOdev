@@ -9,7 +9,7 @@ namespace gorselProgramlamaProje.Forms
     {
         private FlowLayoutPanel flpTarihler;
         private Panel panelBilgi;
-        private Button geriDonButton;
+        private Form anaSayfaForm; // REFERANS
 
         private Dictionary<DateTime, (int saat, int puan)> gunlukVeriler = new Dictionary<DateTime, (int, int)>
         {
@@ -24,9 +24,11 @@ namespace gorselProgramlamaProje.Forms
 
         private Button seciliButon;
 
-        public PerformansForm()
+        // AnaSayfa referansı alacak constructor
+        public PerformansForm(Form geriDonulecekForm)
         {
             InitializeComponent();
+            anaSayfaForm = geriDonulecekForm;
             this.Load += PerformansForm_Load;
         }
 
@@ -35,14 +37,12 @@ namespace gorselProgramlamaProje.Forms
             this.BackColor = Color.Black;
             this.ClientSize = new Size(1000, 600);
 
-            // Arka panel (katmanlı görünüm)
             Panel tarihArkaPanel = new Panel();
             tarihArkaPanel.Size = new Size(820, 100);
             tarihArkaPanel.Location = new Point(90, 20);
             tarihArkaPanel.BackColor = Color.FromArgb(30, 30, 30);
             this.Controls.Add(tarihArkaPanel);
 
-            // Tarih butonları için FlowLayoutPanel
             flpTarihler = new FlowLayoutPanel();
             flpTarihler.Location = new Point(10, 10);
             flpTarihler.Size = new Size(800, 80);
@@ -50,29 +50,12 @@ namespace gorselProgramlamaProje.Forms
             flpTarihler.WrapContents = false;
             tarihArkaPanel.Controls.Add(flpTarihler);
 
-            // Bilgi paneli
             panelBilgi = new Panel();
             panelBilgi.Size = new Size(600, 150);
             panelBilgi.Location = new Point(90, 130);
             panelBilgi.BackColor = Color.FromArgb(40, 40, 40);
             Controls.Add(panelBilgi);
 
-            // Geri Dön butonu
-            geriDonButton = new Button();
-            geriDonButton.Text = "← Geri Dön";
-            geriDonButton.Size = new Size(120, 40);
-            geriDonButton.Location = new Point(this.ClientSize.Width - 140, this.ClientSize.Height - 60);
-            geriDonButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            geriDonButton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            geriDonButton.BackColor = Color.FromArgb(255, 192, 192);
-            geriDonButton.ForeColor = Color.Black;
-            geriDonButton.FlatStyle = FlatStyle.Flat;
-            geriDonButton.FlatAppearance.BorderSize = 0;
-            geriDonButton.TextAlign = ContentAlignment.MiddleCenter;
-            geriDonButton.Click += (s, ev) => this.Close();
-            Controls.Add(geriDonButton);
-
-            // Tarih butonları oluşturuluyor
             DateTime bugun = new DateTime(2025, 5, 29);
             for (int i = -6; i <= 0; i++)
             {
@@ -136,7 +119,7 @@ namespace gorselProgramlamaProje.Forms
             if (gunlukVeriler.TryGetValue(tarih, out var veri))
             {
                 Label lblSaat = new Label();
-                lblSaat.Text = $"Çalışma Süesi: {veri.saat} saat";
+                lblSaat.Text = $"Çalışma Süresi: {veri.saat} saat";
                 lblSaat.ForeColor = Color.White;
                 lblSaat.Location = new Point(20, 50);
                 lblSaat.Font = new Font("Segoe UI", 11, FontStyle.Bold);
@@ -160,6 +143,12 @@ namespace gorselProgramlamaProje.Forms
                 lblBos.AutoSize = true;
                 panelBilgi.Controls.Add(lblBos);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            anaSayfaForm.Show(); // Mevcut AnaSayfa’yı tekrar göster
+            this.Close();        // PerformansForm’u kapat
         }
     }
 }
