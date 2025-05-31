@@ -55,9 +55,14 @@
             Load += PerformansForm_Load;
             ResumeLayout(false);
         }
+        private void PerformansForm_Load(object sender, EventArgs e)
+        {
+            // Designer çağırıyor ama biz elle oluşturduk, içerik gerekmez
+        }
 
         #endregion
 
         private Button button1;
     }
+
 }
