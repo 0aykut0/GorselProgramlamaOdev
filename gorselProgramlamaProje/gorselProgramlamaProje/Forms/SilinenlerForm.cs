@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using System;
-using System.Drawing;
 using System.Windows.Forms;
 using gorselProgramlamaProje.Managers;
 
@@ -18,10 +10,13 @@ namespace gorselProgramlamaProje.Forms
     public partial class SilinenlerForm : Form
     {
         private bool tiklamaKilitli = false;
+        private Form anaSayfaForm; // REFERANS
 
-        public SilinenlerForm()
+        public SilinenlerForm(Form geriDonulecekForm)
         {
             InitializeComponent();
+            anaSayfaForm = geriDonulecekForm;
+
             this.Load += SilinenlerForm_Load;
             dgvDeleted.CellContentClick += dgvDeleted_CellContentClick;
         }
@@ -51,11 +46,9 @@ namespace gorselProgramlamaProje.Forms
 
             dgvDeleted.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvDeleted.GridColor = Color.Black;
-            dgvDeleted.DefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#add8e6"); // Seçim rengi mavi
-
+            dgvDeleted.DefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#add8e6");
             dgvDeleted.DefaultCellStyle.SelectionForeColor = Color.Black;
 
-            // 1) Görev
             dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colTask",
@@ -70,7 +63,6 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // 2) Tarih
             dgvDeleted.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colDate",
@@ -86,7 +78,6 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // 3) Geri Al
             dgvDeleted.Columns.Add(new DataGridViewButtonColumn
             {
                 Name = "colRestore",
@@ -101,7 +92,6 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // 4) Kalıcı Sil
             dgvDeleted.Columns.Add(new DataGridViewButtonColumn
             {
                 Name = "colDelete",
@@ -116,7 +106,6 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // Test verileri (veritabanı entegrasyonuna kadar)
             dgvDeleted.Rows.Add("Test Görev 1", DateTime.Now.AddDays(-1));
             dgvDeleted.Rows.Add("Test Görev 2", DateTime.Now.AddHours(-3));
             dgvDeleted.Rows.Add("Test Görev 3", DateTime.Now.AddDays(-2));
@@ -147,15 +136,14 @@ namespace gorselProgramlamaProje.Forms
                 }
             }
 
-            await Task.Delay(150); // Çift tıklama engellemek için küçük gecikme
+            await Task.Delay(150);
             tiklamaKilitli = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            var ana = new AnaSayfaForm();
-            ana.Show();
+            anaSayfaForm.Show(); // Gizlenmiş olan AnaSayfa'yı geri getir
+            this.Close();        // SilinenlerForm'u kapat
         }
     }
 }

@@ -173,15 +173,10 @@ namespace gorselProgramlamaProje.Forms
                 flpGorevler.Controls.Add(gorevPanel);
             }
         }
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            // Şu anda kullanılmıyor, ama tasarımda referans var
-        }
 
-        private void monthCalendar1_DateChanged_1(object sender, DateRangeEventArgs e)
-        {
-            // Şu anda kullanılmıyor, ama tasarımda referans var
-        }
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e) { }
+        private void monthCalendar1_DateChanged_1(object sender, DateRangeEventArgs e) { }
+
         private void BtnGorevEkle_Click(object sender, EventArgs e)
         {
             if (selectedDateButton == null) return;
@@ -199,35 +194,51 @@ namespace gorselProgramlamaProje.Forms
                 GorevleriYukle(seciliTarih);
             }
         }
-        private void btnAyarlar_Click(object sender, EventArgs e)
-        {
-            // Ayarlar formu varsa burada açılabilir, şu anlık boş.
-            MessageBox.Show("Ayarlar butonuna tıklandı.");
-        }
+
         private void btnMenu_Click(object sender, EventArgs e)
         {
             panelMenu.Visible = !panelMenu.Visible;
         }
 
-        private void btnPerformans_Click(object sender, EventArgs e)
-        { // performans formunu aç
-            this.Visible = false;
-            var performansForm = new PerformansForm();
-            performansForm.ShowDialog();
+        private void btnPomodoro_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            PomodoroForm yeniForm = new(this);
+            yeniForm.ShowDialog();
+            this.Show();
         }
-        private void btnAnaSayfa_Click(object sender, EventArgs e)
-        {// pomodoro formunu aç
-            this.Visible = false; // Ana sayfa formunu gizle
-            var pomodoroForm = new PomodoroForm();
-            pomodoroForm.ShowDialog();
+
+        private void btnPerformans_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            PerformansForm performansForm = new(this);
+            performansForm.ShowDialog();
+            this.Show();
         }
         private void btnsSilinenler_Click(object sender, EventArgs e)
         {
-            // silinenler formunu aç
-            this.Visible = false; // Ana sayfa formunu gizle
-            var silinenlerForm = new SilinenlerForm();
+            this.Hide();
+            SilinenlerForm silinenlerForm = new(this);
             silinenlerForm.ShowDialog();
+            this.Show();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoginForm loginForm = new LoginForm();
+            this.Hide();              // AnaSayfa gizlenir
+            loginForm.ShowDialog();   // Login form modal olarak açılır
+            this.Close();             // Login kapanınca AnaSayfa tamamen kapanır
+        }
+
+        private void btnGunuBitir_Click(object sender, EventArgs e)
+        {
+            this.Hide(); // Önce KayıtForm’u gizle
+
+            GunSonu gunsonu = new GunSonu();
+            gunsonu.ShowDialog(); // Login ekranını modal olarak aç
+
+            this.Close(); // Login kapandıktan sonra KayıtForm’u tamamen kapat
+        }
     }
 }
