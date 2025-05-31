@@ -16,7 +16,6 @@ namespace gorselProgramlamaProje.Forms
         private Button btnNotEkle;
         private Button btnGeriDon;
 
-        // (Eski) in-memory notlar dictionarisi
         private Dictionary<DateTime, List<string>> notlar = new Dictionary<DateTime, List<string>>();
         private Button selectedDateButton = null;
 

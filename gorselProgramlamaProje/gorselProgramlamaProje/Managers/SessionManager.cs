@@ -8,10 +8,8 @@ namespace gorselProgramlamaProje.Managers
 {
     public static class SessionManager
     {
-        /// Giriş yapan kullanıcının Id’si.
         public static int CurrentUserId { get; set; }
 
-        /// İstersen kullanıcı adı, rol, token gibi başka bilgileri de buraya ekleyebilirsin.
         public static string? CurrentUsername { get; set; }
     }
 }

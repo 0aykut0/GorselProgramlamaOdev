@@ -15,7 +15,7 @@ public class Gorev
     public DateTime OlusturmaTarihi { get; set; }
     public bool TamamlandiMi { get; set; }
 
-    // Navigation
+    // Navigatio
     public Kullanici Kullanici { get; set; }
 }
 

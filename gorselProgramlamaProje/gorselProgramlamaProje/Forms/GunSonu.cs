@@ -27,7 +27,7 @@ namespace gorselProgramlamaProje.Forms
 
         private void GunSonu_Load(object sender, EventArgs e)
         {
-            // (1) Ona gönderdiğimiz “selectedDate” ve “currentUserId” ile ozet kaydını al
+            //  Ona gönderdiğimiz “selectedDate” ve “currentUserId” ile ozet kaydını al
             var ozet = GunlukOzetManager.GetOzetByDate(currentUserId, selectedDate);
 
             if (ozet != null)
@@ -37,7 +37,6 @@ namespace gorselProgramlamaProje.Forms
             }
             else
             {
-                // Bu durum normalde gerçekleşmemeli (çünkü Form_Load’da “ilk açılış”ta zaten kaydetmiştik)
                 lblSure.Text = "0 dak";
                 lblYapilanGorev.Text = "Başarılı: 0   Başarısız: 0";
             }

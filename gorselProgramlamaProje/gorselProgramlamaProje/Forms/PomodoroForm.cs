@@ -5,6 +5,7 @@ using System.Media;
 using System.Windows.Forms;
 using gorselProgramlamaProje.Managers;
 using gorselProgramlamaProje.Models;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace gorselProgramlamaProje.Forms
 {
@@ -148,7 +149,7 @@ namespace gorselProgramlamaProje.Forms
 
         private void btnMusic_Click(object sender, EventArgs e)
         {
-            string path = @"C:\\Users\\esmah\\OneDrive\\Desktop\\GorselProgramlamaOdev\\gorselProgramlamaProje\\gorselProgramlamaProje\\assets\\focus.wav";
+            string path = @"C:\Users\mayku\Desktop\pomodoro\GorselProgramlamaOdev\gorselProgramlamaProje\gorselProgramlamaProje\assets\focus.wav";
 
             if (player == null)
                 player = new SoundPlayer(path);
