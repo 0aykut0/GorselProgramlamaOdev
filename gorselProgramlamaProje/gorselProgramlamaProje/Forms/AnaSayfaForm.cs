@@ -3,11 +3,16 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using gorselProgramlamaProje.Managers;
 
 namespace gorselProgramlamaProje.Forms
 {
     public partial class AnaSayfaForm : Form
     {
+        //id
+        private int currentUserId = SessionManager.CurrentUserId;
+        private string currentUsername = SessionManager.CurrentUsername;
+
         private Button selectedDateButton = null;
         private Dictionary<DateTime, List<string>> gorevler = new Dictionary<DateTime, List<string>>();
         private TextBox txtYeniGorev;
@@ -204,7 +209,25 @@ namespace gorselProgramlamaProje.Forms
             panelMenu.Visible = !panelMenu.Visible;
         }
 
-        private void btnPerformans_Click(object sender, EventArgs e) { }
-        private void btnAnaSayfa_Click(object sender, EventArgs e) { }
+        private void btnPerformans_Click(object sender, EventArgs e)
+        { // performans formunu aç
+            this.Visible = false;
+            var performansForm = new PerformansForm();
+            performansForm.ShowDialog();
+        }
+        private void btnAnaSayfa_Click(object sender, EventArgs e)
+        {// pomodoro formunu aç
+            this.Visible = false; // Ana sayfa formunu gizle
+            var pomodoroForm = new PomodoroForm();
+            pomodoroForm.ShowDialog();
+        }
+        private void btnsSilinenler_Click(object sender, EventArgs e)
+        {
+            // silinenler formunu aç
+            this.Visible = false; // Ana sayfa formunu gizle
+            var silinenlerForm = new SilinenlerForm();
+            silinenlerForm.ShowDialog();
+        }
+
     }
 }
