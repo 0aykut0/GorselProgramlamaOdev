@@ -256,7 +256,8 @@ namespace gorselProgramlamaProje.Forms
         private void btnsSilinenler_Click(object sender, EventArgs e)
         {
             this.Hide();
-            SilinenlerForm silinenlerForm = new(this);
+            SilinenlerForm silinenlerForm = new();
+
             silinenlerForm.ShowDialog();
             this.Show();
         }

@@ -28,6 +28,10 @@ namespace gorselProgramlamaProje.Forms
             this.Load += SilinenlerForm_Load;
             dgvDeleted.CellContentClick += dgvDeleted_CellContentClick;
         }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close(); // Bu formu kapat
+        }
 
         private void SilinenlerForm_Load(object? sender, EventArgs e)
         {
