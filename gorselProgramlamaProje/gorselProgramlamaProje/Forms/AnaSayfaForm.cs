@@ -173,10 +173,15 @@ namespace gorselProgramlamaProje.Forms
                 flpGorevler.Controls.Add(gorevPanel);
             }
         }
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            // Şu anda kullanılmıyor, ama tasarımda referans var
+        }
 
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e) { }
-        private void monthCalendar1_DateChanged_1(object sender, DateRangeEventArgs e) { }
-
+        private void monthCalendar1_DateChanged_1(object sender, DateRangeEventArgs e)
+        {
+            // Şu anda kullanılmıyor, ama tasarımda referans var
+        }
         private void BtnGorevEkle_Click(object sender, EventArgs e)
         {
             if (selectedDateButton == null) return;
@@ -194,12 +199,6 @@ namespace gorselProgramlamaProje.Forms
                 GorevleriYukle(seciliTarih);
             }
         }
-
-        private void btnMenu_Click(object sender, EventArgs e)
-        {
-            panelMenu.Visible = !panelMenu.Visible;
-        }
-
         private void btnPomodoro_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -215,6 +214,7 @@ namespace gorselProgramlamaProje.Forms
             performansForm.ShowDialog();
             this.Show();
         }
+
         private void btnsSilinenler_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -240,5 +240,10 @@ namespace gorselProgramlamaProje.Forms
 
             this.Close(); // Login kapandıktan sonra KayıtForm’u tamamen kapat
         }
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            panelMenu.Visible = !panelMenu.Visible;
+        }
     }
 }
+

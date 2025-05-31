@@ -40,7 +40,6 @@ namespace gorselProgramlamaProje.Forms
             panelMenu.Controls.Add(btnTakvim);
             panelMenu.Controls.Add(btnsSilinenler);
             panelMenu.Controls.Add(btnPomodoro);
-            panelMenu.Controls.Add(btnAnaSayfa);
             panelMenu.Controls.Add(button1);
             panelMenu.Location = new Point(0, 49);
             panelMenu.Name = "panelMenu";
@@ -53,12 +52,6 @@ namespace gorselProgramlamaProje.Forms
             button1.Size = new Size(160, 29);
             button1.Location = new Point(47, 379);
 
-            // btnAyarlar
-            btnAyarlar.BackColor = Color.FromArgb(255, 192, 192);
-            btnAyarlar.Text = "AYARLAR";
-            btnAyarlar.Size = new Size(106, 58);
-            btnAyarlar.Location = new Point(68, 273);
-            btnAyarlar.Click += btnAyarlar_Click;
 
             panelMenu.Controls.Add(button1);
             panelMenu.Location = new Point(0, 37);
