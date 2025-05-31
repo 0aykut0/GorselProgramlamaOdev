@@ -47,10 +47,9 @@
             // 
             pnlTimer.BackColor = Color.Pink;
             pnlTimer.Controls.Add(lblTime);
-            pnlTimer.Location = new Point(262, 22);
-            pnlTimer.Margin = new Padding(3, 2, 3, 2);
+            pnlTimer.Location = new Point(299, 29);
             pnlTimer.Name = "pnlTimer";
-            pnlTimer.Size = new Size(175, 150);
+            pnlTimer.Size = new Size(200, 200);
             pnlTimer.TabIndex = 0;
             // 
             // lblTime
@@ -59,8 +58,8 @@
             lblTime.Font = new Font("Segoe UI Semibold", 39F, FontStyle.Bold, GraphicsUnit.Point, 162);
             lblTime.Location = new Point(0, 0);
             lblTime.Name = "lblTime";
-            lblTime.Padding = new Padding(0, 8, 0, 0);
-            lblTime.Size = new Size(175, 150);
+            lblTime.Padding = new Padding(0, 11, 0, 0);
+            lblTime.Size = new Size(200, 200);
             lblTime.TabIndex = 0;
             lblTime.Text = "00:20";
             lblTime.TextAlign = ContentAlignment.MiddleCenter;
@@ -74,10 +73,9 @@
             btnStart.FlatAppearance.MouseDownBackColor = Color.Pink;
             btnStart.FlatAppearance.MouseOverBackColor = Color.Pink;
             btnStart.FlatStyle = FlatStyle.Flat;
-            btnStart.Location = new Point(202, 223);
-            btnStart.Margin = new Padding(3, 2, 3, 2);
+            btnStart.Location = new Point(231, 297);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(88, 30);
+            btnStart.Size = new Size(101, 40);
             btnStart.TabIndex = 1;
             btnStart.Text = "başlat";
             btnStart.UseVisualStyleBackColor = false;
@@ -91,10 +89,9 @@
             btnPause.FlatAppearance.MouseDownBackColor = Color.Pink;
             btnPause.FlatAppearance.MouseOverBackColor = Color.Pink;
             btnPause.FlatStyle = FlatStyle.Flat;
-            btnPause.Location = new Point(307, 223);
-            btnPause.Margin = new Padding(3, 2, 3, 2);
+            btnPause.Location = new Point(351, 297);
             btnPause.Name = "btnPause";
-            btnPause.Size = new Size(88, 30);
+            btnPause.Size = new Size(101, 40);
             btnPause.TabIndex = 2;
             btnPause.Text = "duraklat";
             btnPause.UseVisualStyleBackColor = false;
@@ -108,10 +105,9 @@
             btnStop.FlatAppearance.MouseDownBackColor = Color.Pink;
             btnStop.FlatAppearance.MouseOverBackColor = Color.Pink;
             btnStop.FlatStyle = FlatStyle.Flat;
-            btnStop.Location = new Point(412, 223);
-            btnStop.Margin = new Padding(3, 2, 3, 2);
+            btnStop.Location = new Point(471, 297);
             btnStop.Name = "btnStop";
-            btnStop.Size = new Size(88, 30);
+            btnStop.Size = new Size(101, 40);
             btnStop.TabIndex = 3;
             btnStop.Text = "sıfırla";
             btnStop.UseVisualStyleBackColor = false;
@@ -124,10 +120,9 @@
             // 
             rdoShort.AutoSize = true;
             rdoShort.BackColor = SystemColors.ButtonHighlight;
-            rdoShort.Location = new Point(508, 44);
-            rdoShort.Margin = new Padding(3, 2, 3, 2);
+            rdoShort.Location = new Point(581, 59);
             rdoShort.Name = "rdoShort";
-            rdoShort.Size = new Size(88, 19);
+            rdoShort.Size = new Size(111, 24);
             rdoShort.TabIndex = 4;
             rdoShort.TabStop = true;
             rdoShort.Text = "KISA (10 dk)";
@@ -137,10 +132,9 @@
             // 
             rdoMedium.AutoSize = true;
             rdoMedium.BackColor = SystemColors.HighlightText;
-            rdoMedium.Location = new Point(508, 94);
-            rdoMedium.Margin = new Padding(3, 2, 3, 2);
+            rdoMedium.Location = new Point(581, 125);
             rdoMedium.Name = "rdoMedium";
-            rdoMedium.Size = new Size(95, 19);
+            rdoMedium.Size = new Size(120, 24);
             rdoMedium.TabIndex = 5;
             rdoMedium.TabStop = true;
             rdoMedium.Text = "İDEAL (25 dk)";
@@ -150,10 +144,9 @@
             // 
             rdoLong.AutoSize = true;
             rdoLong.BackColor = SystemColors.HighlightText;
-            rdoLong.Location = new Point(508, 146);
-            rdoLong.Margin = new Padding(3, 2, 3, 2);
+            rdoLong.Location = new Point(581, 195);
             rdoLong.Name = "rdoLong";
-            rdoLong.Size = new Size(105, 19);
+            rdoLong.Size = new Size(129, 24);
             rdoLong.TabIndex = 6;
             rdoLong.TabStop = true;
             rdoLong.Text = "YOĞUN (45 dk)";
@@ -161,19 +154,22 @@
             // 
             // btnMute
             // 
-            btnMute.Location = new Point(736, 12);
+            btnMute.Location = new Point(841, 16);
+            btnMute.Margin = new Padding(3, 4, 3, 4);
             btnMute.Name = "btnMute";
-            btnMute.Size = new Size(33, 32);
+            btnMute.Size = new Size(38, 43);
             btnMute.TabIndex = 7;
             btnMute.Text = "🔇";
             btnMute.UseVisualStyleBackColor = true;
+            // 
             // button1
             // 
             button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
             button1.ForeColor = Color.Pink;
-            button1.Location = new Point(27, 22);
+            button1.Location = new Point(31, 29);
+            button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(86, 31);
             button1.TabIndex = 7;
             button1.Text = "Geri";
             button1.UseVisualStyleBackColor = true;
@@ -181,12 +177,11 @@
             // 
             // PomodoroForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.MenuText;
             ClientSize = new Size(793, 455);
             Controls.Add(btnMute);
-            ClientSize = new Size(694, 341);
             Controls.Add(button1);
             Controls.Add(rdoLong);
             Controls.Add(rdoMedium);
@@ -196,7 +191,6 @@
             Controls.Add(btnStart);
             Controls.Add(pnlTimer);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "PomodoroForm";

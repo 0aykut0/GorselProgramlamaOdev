@@ -256,11 +256,11 @@ namespace gorselProgramlamaProje.Forms
         private void btnsSilinenler_Click(object sender, EventArgs e)
         {
             this.Hide();
-            SilinenlerForm silinenlerForm = new();
-
+            SilinenlerForm silinenlerForm = new(this); // this => AnaSayfaForm referansı
             silinenlerForm.ShowDialog();
             this.Show();
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -283,6 +283,14 @@ namespace gorselProgramlamaProje.Forms
         {
             panelMenu.Visible = !panelMenu.Visible;
         }
+
+        public void GorevleriYenidenYukle()
+        {
+            var oGunGorevleri = GorevManager.TariheGoreGorevleriGetir(currentUserId, selectedDate);
+            GorevleriYukle(oGunGorevleri);
+        }
+
     }
+
 }
 

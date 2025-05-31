@@ -21,16 +21,20 @@ namespace gorselProgramlamaProje.Forms
     public partial class SilinenlerForm : Form
     {
         private bool tiklamaKilitli = false;
+        private AnaSayfaForm anaSayfa; // referans
 
-        public SilinenlerForm()
+        public SilinenlerForm(AnaSayfaForm anaSayfaForm)
         {
             InitializeComponent();
             this.Load += SilinenlerForm_Load;
             dgvDeleted.CellContentClick += dgvDeleted_CellContentClick;
+            anaSayfa = anaSayfaForm;
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Close(); // Bu formu kapat
+            anaSayfa.GorevleriYenidenYukle();
+            this.Close();
         }
 
         private void SilinenlerForm_Load(object? sender, EventArgs e)
@@ -125,7 +129,6 @@ namespace gorselProgramlamaProje.Forms
                 }
             });
 
-            // 🔄 Veritabanından veri çek
             int userId = SessionManager.CurrentUserId;
             var silinenler = SilinenGorevManager.SilinenGorevleriGetir(userId);
 
