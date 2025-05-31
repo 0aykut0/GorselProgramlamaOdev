@@ -21,7 +21,7 @@ namespace gorselProgramlamaProje.Forms
     public partial class SilinenlerForm : Form
     {
         private bool tiklamaKilitli = false;
-        private AnaSayfaForm anaSayfa; // referans
+        private AnaSayfaForm anaSayfa; 
 
         public SilinenlerForm(AnaSayfaForm anaSayfaForm)
         {

@@ -16,7 +16,6 @@ namespace gorselProgramlamaProje.Forms
 
         private void CenterLoginPanel()
         {
-            // loginPanel adındaki paneli form ortasına yerleştirir
             int x = (this.ClientSize.Width - LoginPanel.Width) / 2;
             int y = (this.ClientSize.Height - LoginPanel.Height) / 2;
             LoginPanel.Location = new Point(Math.Max(0, x), Math.Max(0, y));
@@ -47,7 +46,7 @@ namespace gorselProgramlamaProje.Forms
 
                 MessageBox.Show("Giriş başarılı!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
-                var anaForm = new AnaSayfaForm(); // AnaForm constructor'ı Kullanici almalı
+                var anaForm = new AnaSayfaForm();
                 anaForm.ShowDialog();
                 this.Close();
             }
@@ -57,25 +56,19 @@ namespace gorselProgramlamaProje.Forms
             }
         }
 
-
-
         private void lblKullaniciAdi_Click(object sender, EventArgs e)
         {
-            // Label tıklama olayı gerekli değilse silebilirsiniz
         }
 
         private void btnUyeOl_Click(object sender, EventArgs e)
         {
-            // LoginForm'u gizle
             this.Hide();
 
-            // Kayit formunu modal aç
             using (var kayitForm = new Kayit())
             {
                 kayitForm.ShowDialog(this);
             }
 
-            // LoginForm'u kapat
             this.Close();
         }
     }

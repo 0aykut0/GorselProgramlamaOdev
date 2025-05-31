@@ -11,7 +11,6 @@ namespace gorselProgramlamaProje.Forms
         public Kayit()
         {
             InitializeComponent();
-            // Form başlığı
             this.Text = "Kayıt";
 
             CenterKayitPanel();
@@ -20,7 +19,6 @@ namespace gorselProgramlamaProje.Forms
 
         private void CenterKayitPanel()
         {
-            // Form içindeki "KayitPanel" adlı paneli tam ortalar
             int x = (this.ClientSize.Width - KayitPanel.Width) / 2;
             int y = (this.ClientSize.Height - KayitPanel.Height) / 2;
             KayitPanel.Location = new Point(Math.Max(0, x), Math.Max(0, y));
@@ -54,7 +52,7 @@ namespace gorselProgramlamaProje.Forms
             var yeniKullanici = new Kullanici
             {
                 KullaniciAdi = kullaniciAdi,
-                SifreHash = sifre // hashleme KullaniciManager içinde yapılacak
+                SifreHash = sifre
             };
 
             KullaniciManager.KullaniciEkle(yeniKullanici);
@@ -63,20 +61,18 @@ namespace gorselProgramlamaProje.Forms
             this.Close();
         }
 
-
         private void btnIptal_Click(object sender, EventArgs e)
         {
-            this.Hide(); // Önce KayıtForm’u gizle
+            this.Hide();
 
             LoginForm loginForm = new LoginForm();
-            loginForm.ShowDialog(); // Login ekranını modal olarak aç
+            loginForm.ShowDialog();
 
-            this.Close(); // Login kapandıktan sonra KayıtForm’u tamamen kapat
+            this.Close();
         }
 
         private void txtKullaniciAd_TextChanged(object sender, EventArgs e)
         {
-            // İhtiyaç durumunda buraya kod ekleyin
         }
     }
 }

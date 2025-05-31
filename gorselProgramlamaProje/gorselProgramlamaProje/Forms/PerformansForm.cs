@@ -15,7 +15,7 @@ namespace gorselProgramlamaProje.Forms
         private TextBox txtNot;
         private Button btnNotEkle;
         private Button seciliButon;
-        private Form anaSayfaForm; // AnaSayfa referansı
+        private Form anaSayfaForm;
 
         private Dictionary<DateTime, (int saat, int puan, string not)> gunlukVeriler = new()
         {
@@ -26,7 +26,6 @@ namespace gorselProgramlamaProje.Forms
 
         private DateTime seciliTarih = DateTime.Today;
 
-        // AnaSayfa referansı alacak constructor
         public PerformansForm(Form geriDonulecekForm)
         {
             InitializeComponent();
@@ -215,8 +214,8 @@ namespace gorselProgramlamaProje.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            anaSayfaForm.Show(); // Mevcut AnaSayfa’yı tekrar göster
-            this.Close();        // PerformansForm’u kapat
+            anaSayfaForm.Show();
+            this.Close();
         }
     }
 }
