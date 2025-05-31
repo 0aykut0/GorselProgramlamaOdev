@@ -8,7 +8,7 @@ namespace gorselProgramlamaProje
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new AnaSayfaForm());
+            Application.Run(new PerformansForm());
         }
     }
 }

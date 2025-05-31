@@ -8,21 +8,20 @@ namespace gorselProgramlamaProje.Forms
     public partial class PerformansForm : Form
     {
         private FlowLayoutPanel flpTarihler;
-        private Panel panelBilgi;
+        private FlowLayoutPanel flpVeriPanel;
         private Button geriDonButton;
+        private TextBox txtNot;
+        private Button btnNotEkle;
+        private Button seciliButon;
 
-        private Dictionary<DateTime, (int saat, int puan)> gunlukVeriler = new Dictionary<DateTime, (int, int)>
+        private Dictionary<DateTime, (int saat, int puan, string not)> gunlukVeriler = new()
         {
-            { new DateTime(2025, 5, 29), (4, 8) },
-            { new DateTime(2025, 5, 28), (3, 7) },
-            { new DateTime(2025, 5, 27), (5, 9) },
-            { new DateTime(2025, 5, 26), (2, 5) },
-            { new DateTime(2025, 5, 25), (0, 0) },
-            { new DateTime(2025, 5, 30), (6, 9) },
-            { new DateTime(2025, 5, 31), (4, 6) },
+            { new DateTime(2025, 5, 29), (4, 8, "Verimli çalıştım") },
+            { new DateTime(2025, 5, 28), (3, 6, "Daha iyi olabilirdi") },
+            { new DateTime(2025, 5, 27), (5, 9, "Mükemmel geçti") }
         };
 
-        private Button seciliButon;
+        private DateTime seciliTarih = DateTime.Today;
 
         public PerformansForm()
         {
@@ -33,79 +32,91 @@ namespace gorselProgramlamaProje.Forms
         private void PerformansForm_Load(object sender, EventArgs e)
         {
             this.BackColor = Color.Black;
-            this.ClientSize = new Size(1000, 600);
+            this.ClientSize = new Size(1000, 700);
 
-            // Arka panel (katmanlı görünüm)
-            Panel tarihArkaPanel = new Panel();
-            tarihArkaPanel.Size = new Size(820, 100);
-            tarihArkaPanel.Location = new Point(90, 20);
-            tarihArkaPanel.BackColor = Color.FromArgb(30, 30, 30);
-            this.Controls.Add(tarihArkaPanel);
+            flpTarihler = new FlowLayoutPanel
+            {
+                Location = new Point(60, 20),
+                Size = new Size(880, 70),
+                BackColor = Color.FromArgb(30, 30, 30),
+                WrapContents = false
+            };
+            this.Controls.Add(flpTarihler);
 
-            // Tarih butonları için FlowLayoutPanel
-            flpTarihler = new FlowLayoutPanel();
-            flpTarihler.Location = new Point(10, 10);
-            flpTarihler.Size = new Size(800, 80);
-            flpTarihler.BackColor = Color.FromArgb(30, 30, 30);
-            flpTarihler.WrapContents = false;
-            tarihArkaPanel.Controls.Add(flpTarihler);
-
-            // Bilgi paneli
-            panelBilgi = new Panel();
-            panelBilgi.Size = new Size(600, 150);
-            panelBilgi.Location = new Point(90, 130);
-            panelBilgi.BackColor = Color.FromArgb(40, 40, 40);
-            Controls.Add(panelBilgi);
-
-            // Geri Dön butonu
-            geriDonButton = new Button();
-            geriDonButton.Text = "← Geri Dön";
-            geriDonButton.Size = new Size(120, 40);
-            geriDonButton.Location = new Point(this.ClientSize.Width - 140, this.ClientSize.Height - 60);
-            geriDonButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            geriDonButton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            geriDonButton.BackColor = Color.FromArgb(255, 192, 192);
-            geriDonButton.ForeColor = Color.Black;
-            geriDonButton.FlatStyle = FlatStyle.Flat;
-            geriDonButton.FlatAppearance.BorderSize = 0;
-            geriDonButton.TextAlign = ContentAlignment.MiddleCenter;
-            geriDonButton.Click += (s, ev) => this.Close();
-            Controls.Add(geriDonButton);
-
-            // Tarih butonları oluşturuluyor
             DateTime bugun = new DateTime(2025, 5, 29);
             for (int i = -6; i <= 0; i++)
             {
                 DateTime tarih = bugun.AddDays(i);
-                Button btnTarih = new Button();
-                btnTarih.Size = new Size(110, 70);
-                btnTarih.Text = $"{tarih:ddd}\n{tarih:dd.MM.yyyy}";
-                btnTarih.Font = new Font("Segoe UI", 10.5f, FontStyle.Bold);
-                btnTarih.TextAlign = ContentAlignment.MiddleCenter;
-                btnTarih.ForeColor = Color.White;
-                btnTarih.BackColor = Color.FromArgb(60, 60, 60);
-                btnTarih.FlatStyle = FlatStyle.Flat;
-                btnTarih.FlatAppearance.BorderColor = Color.Gray;
-                btnTarih.FlatAppearance.BorderSize = 1;
-                btnTarih.Tag = tarih;
-                btnTarih.Click += BtnTarih_Click;
-
-                if (tarih.Date == bugun.Date)
+                Button btn = new Button
                 {
-                    seciliButon = btnTarih;
-                    btnTarih.BackColor = Color.FromArgb(255, 192, 192);
-                    btnTarih.ForeColor = Color.Black;
-                    panelBilgi.Controls.Clear();
-                    TarihBilgisiGoster(tarih);
-                }
+                    Size = new Size(110, 60),
+                    Text = $"{tarih:ddd}\n{tarih:dd.MM.yyyy}",
+                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(60, 60, 60),
+                    Tag = tarih,
+                    FlatStyle = FlatStyle.Flat
+                };
+                btn.FlatAppearance.BorderColor = Color.Gray;
+                btn.FlatAppearance.BorderSize = 1;
+                btn.Click += BtnTarih_Click;
+                flpTarihler.Controls.Add(btn);
 
-                flpTarihler.Controls.Add(btnTarih);
+                if (tarih == bugun)
+                {
+                    seciliButon = btn;
+                    btn.BackColor = Color.FromArgb(255, 192, 192);
+                    btn.ForeColor = Color.Black;
+                    seciliTarih = tarih;
+                }
             }
+
+            flpVeriPanel = new FlowLayoutPanel
+            {
+                Location = new Point(60, 110),
+                Size = new Size(880, 150),
+                BackColor = Color.FromArgb(40, 40, 40),
+                AutoScroll = true,
+                FlowDirection = FlowDirection.TopDown
+            };
+            this.Controls.Add(flpVeriPanel);
+
+            txtNot = new TextBox
+            {
+                Size = new Size(400, 30),
+                Location = new Point(60, 280)
+            };
+            this.Controls.Add(txtNot);
+
+            btnNotEkle = new Button
+            {
+                Text = "Not Ekle",
+                Size = new Size(80, 30),
+                Location = new Point(470, 280),
+                BackColor = Color.HotPink,
+                ForeColor = Color.White
+            };
+            btnNotEkle.Click += BtnNotEkle_Click;
+            this.Controls.Add(btnNotEkle);
+
+            geriDonButton = new Button
+            {
+                Text = "← Geri Dön",
+                Size = new Size(120, 40),
+                Location = new Point(this.ClientSize.Width - 140, this.ClientSize.Height - 60),
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Right,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                BackColor = Color.FromArgb(255, 192, 192)
+            };
+            geriDonButton.Click += (s, ev) => this.Close();
+            this.Controls.Add(geriDonButton);
+
+            PaneliGuncelle(seciliTarih);
         }
 
         private void BtnTarih_Click(object sender, EventArgs e)
         {
-            if (sender is Button tiklananButon)
+            if (sender is Button btn)
             {
                 if (seciliButon != null)
                 {
@@ -113,52 +124,87 @@ namespace gorselProgramlamaProje.Forms
                     seciliButon.ForeColor = Color.White;
                 }
 
-                tiklananButon.BackColor = Color.FromArgb(255, 192, 192);
-                tiklananButon.ForeColor = Color.Black;
-                seciliButon = tiklananButon;
-
-                DateTime seciliTarih = (DateTime)tiklananButon.Tag;
-                panelBilgi.Controls.Clear();
-                TarihBilgisiGoster(seciliTarih);
+                btn.BackColor = Color.FromArgb(255, 192, 192);
+                btn.ForeColor = Color.Black;
+                seciliButon = btn;
+                seciliTarih = (DateTime)btn.Tag;
+                PaneliGuncelle(seciliTarih);
             }
         }
 
-        private void TarihBilgisiGoster(DateTime tarih)
+        private void PaneliGuncelle(DateTime tarih)
         {
-            Label lblTarih = new Label();
-            lblTarih.Text = $"Seçili Tarih: {tarih:dd.MM.yyyy}";
-            lblTarih.ForeColor = Color.White;
-            lblTarih.Font = new Font("Segoe UI", 12, FontStyle.Bold);
-            lblTarih.Location = new Point(20, 20);
-            lblTarih.AutoSize = true;
-            panelBilgi.Controls.Add(lblTarih);
+            flpVeriPanel.Controls.Clear();
+
+            Label lblTarih = new Label
+            {
+                Text = $"📅 Seçili Tarih: {tarih:dd.MM.yyyy}",
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                AutoSize = true
+            };
+            flpVeriPanel.Controls.Add(lblTarih);
 
             if (gunlukVeriler.TryGetValue(tarih, out var veri))
             {
-                Label lblSaat = new Label();
-                lblSaat.Text = $"Çalışma Süesi: {veri.saat} saat";
-                lblSaat.ForeColor = Color.White;
-                lblSaat.Location = new Point(20, 50);
-                lblSaat.Font = new Font("Segoe UI", 11, FontStyle.Bold);
-                lblSaat.AutoSize = true;
-                panelBilgi.Controls.Add(lblSaat);
+                Label lblSaat = new Label
+                {
+                    Text = $"🕒 Çalışma Süresi: {veri.saat} saat",
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                    AutoSize = true
+                };
+                flpVeriPanel.Controls.Add(lblSaat);
 
-                Label lblPuan = new Label();
-                lblPuan.Text = $"Günlük Puan: {veri.puan} / 10";
-                lblPuan.ForeColor = Color.White;
-                lblPuan.Location = new Point(20, 80);
-                lblPuan.Font = new Font("Segoe UI", 11, FontStyle.Bold);
-                lblPuan.AutoSize = true;
-                panelBilgi.Controls.Add(lblPuan);
+                Label lblPuan = new Label
+                {
+                    Text = $"⭐ Günlük Puan: {veri.puan} / 10",
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                    AutoSize = true
+                };
+                flpVeriPanel.Controls.Add(lblPuan);
+
+                if (!string.IsNullOrEmpty(veri.not))
+                {
+                    Label lblNot = new Label
+                    {
+                        Text = $"📝 Not: {veri.not}",
+                        ForeColor = Color.White,
+                        Font = new Font("Segoe UI", 9),
+                        AutoSize = true
+                    };
+                    flpVeriPanel.Controls.Add(lblNot);
+                }
             }
             else
             {
-                Label lblBos = new Label();
-                lblBos.Text = "Veri bulunamadı.";
-                lblBos.ForeColor = Color.White;
-                lblBos.Location = new Point(20, 50);
-                lblBos.AutoSize = true;
-                panelBilgi.Controls.Add(lblBos);
+                flpVeriPanel.Controls.Add(new Label
+                {
+                    Text = "Veri bulunamadı.",
+                    ForeColor = Color.White,
+                    AutoSize = true
+                });
+            }
+        }
+
+        private void BtnNotEkle_Click(object sender, EventArgs e)
+        {
+            string girilenNot = txtNot.Text.Trim();
+            if (!string.IsNullOrEmpty(girilenNot))
+            {
+                if (gunlukVeriler.ContainsKey(seciliTarih))
+                {
+                    var eski = gunlukVeriler[seciliTarih];
+                    gunlukVeriler[seciliTarih] = (eski.saat, eski.puan, girilenNot);
+                }
+                else
+                {
+                    gunlukVeriler[seciliTarih] = (0, 0, girilenNot);
+                }
+
+                PaneliGuncelle(seciliTarih);
+                txtNot.Clear();
             }
         }
     }
