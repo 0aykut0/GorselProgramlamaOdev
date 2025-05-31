@@ -1,26 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using gorselProgramlamaProje.Managers;
+using gorselProgramlamaProje.Models;
 
 namespace gorselProgramlamaProje.Forms
 {
     public partial class GunSonu : Form
     {
+        private DateTime selectedDate;
+        private int currentUserId;
+
         public GunSonu()
         {
             InitializeComponent();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        public GunSonu(DateTime tarih, int kullaniciId)
         {
+            InitializeComponent();
+            selectedDate = tarih;
+            currentUserId = kullaniciId;
 
+            this.Load += GunSonu_Load;
         }
+
+        private void GunSonu_Load(object sender, EventArgs e)
+        {
+            // (1) Ona gönderdiğimiz “selectedDate” ve “currentUserId” ile ozet kaydını al
+            var ozet = GunlukOzetManager.GetOzetByDate(currentUserId, selectedDate);
+
+            if (ozet != null)
+            {
+                lblSure.Text = $"{ozet.ToplamPomodoroDakika} dak";
+                lblYapilanGorev.Text = $"Başarılı: {ozet.BasariliGorevSayisi}   Başarısız: {ozet.BasarisizGorevSayisi}";
+            }
+            else
+            {
+                // Bu durum normalde gerçekleşmemeli (çünkü Form_Load’da “ilk açılış”ta zaten kaydetmiştik)
+                lblSure.Text = "0 dak";
+                lblYapilanGorev.Text = "Başarılı: 0   Başarısız: 0";
+            }
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {

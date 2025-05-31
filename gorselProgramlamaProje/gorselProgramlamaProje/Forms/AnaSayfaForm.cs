@@ -25,6 +25,20 @@ namespace gorselProgramlamaProje.Forms
         public AnaSayfaForm()
         {
             InitializeComponent();
+            var mevcutOzet = GunlukOzetManager.GetOzetByDate(currentUserId, selectedDate);
+            if (mevcutOzet == null)
+            {
+                // Yeni kayıt: 0 dakika, 0 başarılı, 0 başarısız
+                GunlukOzet newOzet = new GunlukOzet
+                {
+                    KullaniciId = currentUserId,
+                    Tarih = selectedDate,
+                    ToplamPomodoroDakika = 0,
+                    BasariliGorevSayisi = 0,
+                    BasarisizGorevSayisi = 0
+                };
+                GunlukOzetManager.AddGunlukOzet(newOzet);
+            }
 
             // Form ayarları
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -271,13 +285,31 @@ namespace gorselProgramlamaProje.Forms
 
         private void btnGunuBitir_Click(object sender, EventArgs e)
         {
-            this.Hide(); // Önce KayıtForm’u gizle
+            this.Hide();
 
-            GunSonu gunsonu = new GunSonu();
-            gunsonu.ShowDialog(); // Login ekranını modal olarak aç
+            // 3.a) O güne ait görevleri çek
+            var gorevlerOgun = GorevManager.TariheGoreGorevleriGetir(currentUserId, selectedDate);
 
-            this.Close(); // Login kapandıktan sonra KayıtForm’u tamamen kapat
+            // 3.b) Başarılı / Başarısız sayıları hesapla
+            int basariliSayisi = gorevlerOgun.Count(g => g.TamamlandiMi);
+            int basarisizSayisi = gorevlerOgun.Count(g => !g.TamamlandiMi);
+
+            // 3.c) GunlukOzet kaydını getir (zaruri: ozet zaten "AnaSayfaForm_Load" aşamasında oluşturulmuş olmalı)
+            var ozet = GunlukOzetManager.GetOzetByDate(currentUserId, selectedDate);
+            if (ozet != null)
+            {
+                ozet.BasariliGorevSayisi = basariliSayisi;
+                ozet.BasarisizGorevSayisi = basarisizSayisi;
+                GunlukOzetManager.UpdateGunlukOzet(ozet);  // Bu metodu manager'a eklemeniz gerekir
+            }
+
+            // 3.d) GunSonu formunu aç
+            GunSonu gunSonuForm = new GunSonu(selectedDate, currentUserId);
+            gunSonuForm.ShowDialog();
+
+            this.Close();
         }
+
         private void btnMenu_Click(object sender, EventArgs e)
         {
             panelMenu.Visible = !panelMenu.Visible;
