@@ -28,7 +28,7 @@ namespace gorselProgramlamaProje.Forms
             var mevcutOzet = GunlukOzetManager.GetOzetByDate(currentUserId, selectedDate);
             if (mevcutOzet == null)
             {
-                // Yeni kayıt: 0 dakika, 0 başarılı, 0 başarısız
+                
                 GunlukOzet newOzet = new GunlukOzet
                 {
                     KullaniciId = currentUserId,
@@ -40,7 +40,7 @@ namespace gorselProgramlamaProje.Forms
                 GunlukOzetManager.AddGunlukOzet(newOzet);
             }
 
-            // Form ayarları
+            
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -48,14 +48,14 @@ namespace gorselProgramlamaProje.Forms
             this.ClientSize = new Size(1300, 800);
             this.BackColor = Color.Black;
             
-            // Başlık ayarları
+            
             txtYeniGorev = new TextBox();
             txtYeniGorev.Size = new Size(500, 30);
             txtYeniGorev.Location = new Point(280, 700);
             txtYeniGorev.Font = new Font("Segoe UI", 10);
             Controls.Add(txtYeniGorev);
 
-            // Butonlar
+            
             btnGorevEkle = new Button();
             btnGorevEkle.Text = "Görev Ekle";
             btnGorevEkle.Size = new Size(100, 30);
@@ -76,7 +76,7 @@ namespace gorselProgramlamaProje.Forms
 
         private void AnaSayfaForm_Load(object sender, EventArgs e)
         {
-            // default olarak bugünün tarihini göster
+          
             selectedDate = bugun;
             flpTarihler.Controls.Clear();
             flpTarihler.Height = 80;
@@ -110,7 +110,7 @@ namespace gorselProgramlamaProje.Forms
                 flpTarihler.Controls.Add(btn);
             }
 
-            //gorevler[seciliTarih] = new List<string> { "Java ödevini bitir", "Sunumu hazırla", "GitHub push kontrolü" };
+            
             var gorevlerOgun = GorevManager.TariheGoreGorevleriGetir(currentUserId, selectedDate);
             GorevleriYukle(gorevlerOgun);
         }
@@ -128,10 +128,7 @@ namespace gorselProgramlamaProje.Forms
             selectedDateButton.ForeColor = Color.Black;
 
             selectedDate = (DateTime)selectedDateButton.Tag;
-            //if (!gorevler.ContainsKey(secilenTarih))
-            //{
-            //    gorevler[secilenTarih] = new List<string>();
-            //}
+            
             var gorevlerOgun = GorevManager.TariheGoreGorevleriGetir(currentUserId, selectedDate);
             GorevleriYukle(gorevlerOgun);
         }
@@ -147,7 +144,6 @@ namespace gorselProgramlamaProje.Forms
                 gorevPanel.BackColor = Color.FromArgb(40, 40, 40);
                 gorevPanel.Margin = new Padding(5);
 
-                // 1) Başlık TextBox
                 TextBox txt = new TextBox();
                 txt.Text = gorev.Baslik;
                 txt.ReadOnly = true;
@@ -159,7 +155,6 @@ namespace gorselProgramlamaProje.Forms
                 if (gorev.TamamlandiMi)
                     txt.Font = new Font(txt.Font, FontStyle.Strikeout);
 
-                // 2) Tamamlandı CheckBox
                 CheckBox chkTamamlandi = new CheckBox();
                 chkTamamlandi.Text = "Tamamlandı";
                 chkTamamlandi.ForeColor = Color.White;
@@ -180,7 +175,6 @@ namespace gorselProgramlamaProje.Forms
                         txt.Font = new Font(txt.Font, FontStyle.Regular);
                 };
 
-                // 3) Sil Butonu
                 Button btnSil = new Button();
                 btnSil.Text = "Sil";
                 btnSil.BackColor = Color.HotPink;
@@ -197,7 +191,7 @@ namespace gorselProgramlamaProje.Forms
                     var g = (Gorev)b.Tag;
                     GorevManager.GoreviSil(g.Id);
 
-                    // Silme sonrası, aynı tarih için listeyi yeniden çek:
+                 
                     var updatedList = GorevManager.TariheGoreGorevleriGetir(currentUserId, selectedDate);
                     GorevleriYukle(updatedList);
                 };
@@ -213,19 +207,18 @@ namespace gorselProgramlamaProje.Forms
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
-            // Şu anda kullanılmıyor, ama tasarımda referans var
+            
         }
 
         private void monthCalendar1_DateChanged_1(object sender, DateRangeEventArgs e)
         {
-            // Şu anda kullanılmıyor, ama tasarımda referans var
+            
         }
         private void BtnGorevEkle_Click(object sender, EventArgs e)
         {
             if (selectedDateButton == null) return;
 
-            // Artık parametreden değil, form düzeyindeki değişkenden alıyoruz
-            // DateTime seciliTarih = (DateTime)selectedDateButton.Tag;
+            
             DateTime seciliTarih = selectedDate;
 
             string baslik = txtYeniGorev.Text.Trim();
@@ -244,7 +237,6 @@ namespace gorselProgramlamaProje.Forms
 
                 txtYeniGorev.Clear();
 
-                // Aynı günün görevlerini DB’den yeniden çek ve yükle
                 var oGunGorevleri = GorevManager.TariheGoreGorevleriGetir(currentUserId, seciliTarih);
                 GorevleriYukle(oGunGorevleri);
             }
@@ -270,7 +262,7 @@ namespace gorselProgramlamaProje.Forms
         private void btnsSilinenler_Click(object sender, EventArgs e)
         {
             this.Hide();
-            SilinenlerForm silinenlerForm = new(this); // this => AnaSayfaForm referansı
+            SilinenlerForm silinenlerForm = new(this); 
             silinenlerForm.ShowDialog();
             this.Show();
         }
@@ -279,32 +271,31 @@ namespace gorselProgramlamaProje.Forms
         private void button1_Click(object sender, EventArgs e)
         {
             LoginForm loginForm = new LoginForm();
-            this.Hide();              // AnaSayfa gizlenir
-            loginForm.ShowDialog();   // Login form modal olarak açılır
-            this.Close();             // Login kapanınca AnaSayfa tamamen kapanır
+            this.Hide();              
+            loginForm.ShowDialog();   
+            this.Close();             
         }
 
         private void btnGunuBitir_Click(object sender, EventArgs e)
         {
             this.Hide();
 
-            // 3.a) O güne ait görevleri çek
+            
             var gorevlerOgun = GorevManager.TariheGoreGorevleriGetir(currentUserId, selectedDate);
 
-            // 3.b) Başarılı / Başarısız sayıları hesapla
+            
             int basariliSayisi = gorevlerOgun.Count(g => g.TamamlandiMi);
             int basarisizSayisi = gorevlerOgun.Count(g => !g.TamamlandiMi);
 
-            // 3.c) GunlukOzet kaydını getir (zaruri: ozet zaten "AnaSayfaForm_Load" aşamasında oluşturulmuş olmalı)
+            
             var ozet = GunlukOzetManager.GetOzetByDate(currentUserId, selectedDate);
             if (ozet != null)
             {
                 ozet.BasariliGorevSayisi = basariliSayisi;
                 ozet.BasarisizGorevSayisi = basarisizSayisi;
-                GunlukOzetManager.UpdateGunlukOzet(ozet);  // Bu metodu manager'a eklemeniz gerekir
+                GunlukOzetManager.UpdateGunlukOzet(ozet);  
             }
 
-            // 3.d) GunSonu formunu aç
             GunSonu gunSonuForm = new GunSonu(selectedDate, currentUserId);
             gunSonuForm.ShowDialog();
 
